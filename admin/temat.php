@@ -255,6 +255,7 @@ $(document).ready(function(){
 			],
 			
 		});
+	});
 		
 	
 
@@ -413,6 +414,7 @@ $('#przydzial_button').click(function(){
     	$('#form_message').html('');
 
 	});
+	
     $('#przydzial_form').on('submit', function(event){
 		event.preventDefault();
 		if($('#przydzial_form').parsley().isValid())
@@ -454,8 +456,6 @@ $('#przydzial_button').click(function(){
 				}
 			})
 		}
-	});
-
 	});
 
 </script>
