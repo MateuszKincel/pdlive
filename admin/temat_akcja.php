@@ -214,8 +214,6 @@ if($_POST["action"] == 'fetch_single')
 
 if($_POST["action"] == 'Przydziel')
 {
-	$error = '';
-
 	$success = '';
     // Get number of topics and number of promotors
 	$liczba_tematow = $_POST["liczba_tematow"];
@@ -264,13 +262,6 @@ if($_POST["action"] == 'Przydziel')
 			$admin_email = $admin_data_row['admin_adres_email'];
 
 
-			// $object->query = 
-			// "SELECT admin_adres_email FROM admin";
-
-			// $admin_email = $object->get_result();
-			// $admin_email_row = $admin_email->fetch();
-			// $admin_email = $admin_email_row['admin_adres_email'];
-
 			$repplyTo = $admin_email;
 			foreach ($promotor_emails as $promotor_email) {
 				$promotor_adres_email = $promotor_email['promotor_adres_email'];
@@ -278,32 +269,43 @@ if($_POST["action"] == 'Przydziel')
 
 				$message = 'Administrator '.$admin_nazwa.'  zmienił liczbę twoich tematów na: '. $temat_na_promotora.'';
 				$subject = 'Powiadomienie od administratora!';
-				$message_body = '<p>Twoj administrator '.$admin_nazwa.'  wysłał do ciebie wiadomość:</p>
-				<p>'.$message.'</p>
-				<p>  </p>
-				<p>  </p>
-				<p>Odpowiedź na tą wiadomość zostanie wysłana na e-mail: '.$admin_email.'</p>
-				<p></p>
-				<p>Z poważaniem</p>
-				<p><b>E-Praca.pl</b></p>';
-
-				// $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
-			}
-			
-			if($object) {
-				echo '<div class="alert alert-success">Wysłano powiadomienie E-mail</div>';
-			} else {
-				echo '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
-			}
-
-				$output = array(
-				'error'		=>	$error,
-				'success'	=>	$success
 				
-			);
 
-		echo json_encode($output);
-	}
+
+			$repplyTo = $admin_email;
+foreach ($promotor_emails as $promotor_email) {
+    $promotor_adres_email = $promotor_email['promotor_adres_email'];
+    $recipient = $promotor_adres_email;
+
+    $message = 'Administrator '.$admin_nazwa.'  zmienił liczbę twoich tematów na: '. $temat_na_promotora.'';
+    $subject = 'Powiadomienie od administratora!';
+    $message_body = '<p>Twoj administrator '.$admin_nazwa.'  wysłał do ciebie wiadomość:</p>
+    <p>'.$message.'</p>
+    <p>  </p>
+    <p>  </p>
+    <p>Odpowiedź na tą wiadomość zostanie wysłana na e-mail: '.$admin_email.'</p>
+    <p></p>
+    <p>Z poważaniem</p>
+    <p><b>E-Praca.pl</b></p>';
+
+    $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
+}
+
+if($object) {
+    $success .= '<div class="alert alert-success">Wysłano powiadomienie E-mail</div>';
+} else {
+    $error .= '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
+}
+
+$output = array(
+    'error'     =>  $error,
+    'success'   =>  $success
+    
+);
+
+echo json_encode($output);
+			}
+		}
 	
 
 
