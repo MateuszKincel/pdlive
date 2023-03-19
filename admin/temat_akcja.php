@@ -260,18 +260,6 @@ if($_POST["action"] == 'Przydziel')
 
 			$admin_nazwa = $admin_data_row['admin_nazwa'];
 			$admin_email = $admin_data_row['admin_adres_email'];
-
-
-			$repplyTo = $admin_email;
-			foreach ($promotor_emails as $promotor_email) {
-				$promotor_adres_email = $promotor_email['promotor_adres_email'];
-				$recipient = $promotor_adres_email;
-
-				$message = 'Administrator '.$admin_nazwa.'  zmienił liczbę twoich tematów na: '. $temat_na_promotora.'';
-				$subject = 'Powiadomienie od administratora!';
-				
-
-
 			$repplyTo = $admin_email;
 foreach ($promotor_emails as $promotor_email) {
     $promotor_adres_email = $promotor_email['promotor_adres_email'];
@@ -305,7 +293,7 @@ $output = array(
 
 echo json_encode($output);
 			}
-		}
+	
 	
 
 
