@@ -434,7 +434,7 @@ $('#przydzial_button').click(function(){
             },
             success:function(data)
             {
-                updateTopicsTotal();
+                // updateTopicsTotal();
                 $('#submit_button').attr('disabled', false);
                 $('#submit_button').val('Przydziel');
                 if(data.error != '')
