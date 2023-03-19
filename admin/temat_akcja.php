@@ -102,6 +102,7 @@ if(isset($_POST["action"]))
 		echo json_encode($output);
 
 	}
+}
 
 if($_POST["action"] == 'delete_temat')
 		{
@@ -386,6 +387,4 @@ if($_SESSION['type'] == 'Promotor')
 
 		}
 	}
-
-}
 ?>
