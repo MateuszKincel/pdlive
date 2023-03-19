@@ -3,7 +3,7 @@ DirectoryIndex index.php
 allow from 127.0.0.1
 # DO NOT REMOVE THIS LINE AND THE LINES ABOVE 0hOmcf2Sq7:IPALLOWID
 
-Redirect /admin/ https://epraca.site/admin/admin/panel_admin.php
+Redirect /admin/ https://epraca.site/admin/panel_admin.php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
