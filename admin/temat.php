@@ -444,7 +444,9 @@ $('#przydzial_button').click(function(){
                 }
                 else
                 {
+					console.log("przed schowaniem modalu")
                     $('#przydzialModal').modal('hide');
+					console.log("po schowaniu modalu")
                     $('#message').html(data.success);
                     dataTable.ajax.reload();
 
