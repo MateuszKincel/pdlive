@@ -249,13 +249,7 @@ if($_POST["action"] == 'Przydziel')
 	$promotors = $object->statement_result();
 	$success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
 	
-	$output = array(
-				'error'		=>	$error,
-				'success'	=>	$success
-				
-			);
 
-	echo json_encode($output);
 
 	
 
@@ -304,7 +298,15 @@ if($_POST["action"] == 'Przydziel')
 			} else {
 				echo '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
 			}
-		}
+
+				$output = array(
+				'error'		=>	$error,
+				'success'	=>	$success
+				
+			);
+
+		echo json_encode($output);
+	}
 	
 
 
