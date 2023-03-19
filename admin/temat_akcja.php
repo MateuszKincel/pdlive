@@ -249,10 +249,6 @@ if($_POST["action"] == 'Przydziel')
 	$promotors = $object->statement_result();
 	$success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
 	
-
-
-	
-
 			$object->query = "SELECT * FROM promotor";
 			$promotor_emails = $object->get_result();
 
@@ -290,7 +286,7 @@ if($_POST["action"] == 'Przydziel')
 				<p>Z poważaniem</p>
 				<p><b>E-Praca.pl</b></p>';
 
-				$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
+				// $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
 			}
 			
 			if($object) {
