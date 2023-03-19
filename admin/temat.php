@@ -416,47 +416,47 @@ $('#przydzial_button').click(function(){
 	});
 	
     $('#przydzial_form').on('submit', function(event){
-		event.preventDefault();
-		if($('#przydzial_form').parsley().isValid())
-		{		
-			$.ajax({
-				url:"temat_akcja.php",
-				method:"POST",
-				data: new FormData(this),
-				dataType:'json',
-                contentType: false,
-                cache: false,
-                processData:false,
-				beforeSend:function()
-				{
-					$('#submit_button').attr('disabled', 'disabled');
-					$('#submit_button').val('czekaj...');
-				},
-				success:function(data)
-				{
-					updateTopicsTotal();
-					$('#submit_button').attr('disabled', false);
-					$('#submit_button').val('Przydziel');
-					if(data.error != '')
-					{
-						$('#form_message').html(data.error);
-						$('#submit_button').val('Przydziel');
-					}
-					else
-					{
-						$('#message').html(data.success);
-						$('#przydzialModal').modal('hide');
-						dataTable.ajax.reload();
-	
+    event.preventDefault();
+    if($('#przydzial_form').parsley().isValid())
+    {       
+        $.ajax({
+            url:"temat_akcja.php",
+            method:"POST",
+            data: new FormData(this),
+            dataType:'json',
+            contentType: false,
+            cache: false,
+            processData:false,
+            beforeSend:function()
+            {
+                $('#submit_button').attr('disabled', 'disabled');
+                $('#submit_button').val('czekaj...');
+            },
+            success:function(data)
+            {
+                updateTopicsTotal();
+                $('#submit_button').attr('disabled', false);
+                $('#submit_button').val('Przydziel');
+                if(data.error != '')
+                {
+                    $('#form_message').html(data.error);
+                    $('#submit_button').val('Przydziel');
+                }
+                else
+                {
+                    $('#przydzialModal').modal('hide');
+                    $('#message').html(data.success);
+                    dataTable.ajax.reload();
 
-						setTimeout(function(){
-							$('#message').html('');
-						}, 5000);
-					}
-				}
-			})
-		}
-	});
+                    setTimeout(function(){
+                        $('#message').html('');
+                    }, 5000);
+                }
+            }
+        })
+    }
+});
+
 
 </script>
 
