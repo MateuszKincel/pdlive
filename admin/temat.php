@@ -444,8 +444,8 @@ $('#przydzial_button').click(function(){
 					}
 					else
 					{
-						$('#przydzialModal').modal('hide');
 						$('#message').html(data.success);
+						$('#przydzialModal').modal('hide');
 						dataTable.ajax.reload();
 	
 
