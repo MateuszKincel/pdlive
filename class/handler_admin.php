@@ -36,7 +36,7 @@ class Handler
 
 	function send_mail($message, $subject, $message_body, $recipient, $repplyTo=null) {
     $mail = new PHPMailer(true);
-    // $mail->SMTPDebug = 4;
+    $mail->SMTPDebug = 4;
     $mail->isSMTP();
     $mail->CharSet = 'UTF-8';
     $mail->Host = 'smtp.gmail.com';
