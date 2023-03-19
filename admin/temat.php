@@ -444,7 +444,7 @@ $('#przydzial_button').click(function(){
                 }
                 else
                 {
-					console.log("przed schowaniem modalu")
+					console.log($('#przydzialModal'));
                     $('#przydzialModal').modal('hide');
 					console.log("po schowaniu modalu")
                     $('#message').html(data.success);
