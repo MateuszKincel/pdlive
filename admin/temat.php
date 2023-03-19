@@ -440,11 +440,13 @@ $('#przydzial_button').click(function(){
                 if(data.error != '')
                 {
                     $('#form_message').html(data.error);
+					console.log("przydzialModal ERROR")
                     $('#submit_button').val('Przydziel');
                 }
                 else
                 {
 					console.log($('#przydzialModal'));
+					console.log("przydzialModal")
                     $('#przydzialModal').modal('hide');
 					console.log("po schowaniu modalu")
                     $('#message').html(data.success);
