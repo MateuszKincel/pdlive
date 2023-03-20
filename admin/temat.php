@@ -313,7 +313,7 @@ $(document).on('click', '.edit_button', function() {
   $.ajax({
     url: "temat_akcja.php",
     method: "POST",
-    data: {promotor_id: promotor_id, action: 'fetch'},
+    data: {promotor_id: promotor_id, action: 'edit_single'},
     dataType: "JSON",
     success: function(data) {
       // Display the fetched promotor_liczba_tematow value in the modal
@@ -357,7 +357,6 @@ $(document).on('click', '.edit_button', function() {
     }
   });
 });
-
 
 function updatePromotorLiczbaTematow(promotor_id, new_value) {
   $.ajax({
