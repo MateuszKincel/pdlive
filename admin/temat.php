@@ -396,67 +396,59 @@ $(document).on('click', '.view_button', function(){
 
 
 
-const przydzialButton = $('#przydzial_button');
-const przydzialForm = $('#przydzial_form');
-const modalTitle = $('#modal_title');
-const actionInput = $('#action');
-const submitButton = $('#submit_button');
-const formMessage = $('#form_message');
-const message = $('#message');
-
-przydzialButton.click(() => {
-  console.log('przydzialModal');
-  przydzialForm[0].reset();
-  przydzialForm.parsley().reset();
-  modalTitle.text('Przydziel liczbę tematów');
-  actionInput.val('Przydziel');
-  submitButton.val('Przydziel');
+$('#przydzial_button').click(function(){
+  console.log("przydzialModal");
+  $('#przydzial_form')[0].reset();
+  $('#przydzial_form').parsley().reset();
+  $('#modal_title').text('Przydziel liczbę tematów');
+  $('#action').val('Przydziel');
+  $('#submit_button').val('Przydziel');
   $('#przydzialModal').modal('show');
-  formMessage.html('');
+  $('#form_message').html('');
 });
 
-przydzialForm.on('submit', (event) => {
+$('#przydzial_form').on('submit', function(event){
   event.preventDefault();
-  if (przydzialForm.parsley().isValid()) {
+  if($('#przydzial_form').parsley().isValid()) {       
     $.ajax({
-      url: 'temat_akcja.php',
-      method: 'POST',
-      data: new FormData(przydzialForm[0]),
-      dataType: 'json',
+      url: "temat_akcja.php",
+      method: "POST",
+      data: new FormData(this),
+      dataType: "json",
       contentType: false,
       cache: false,
       processData: false,
-      beforeSend: () => {
-        submitButton.prop('disabled', true).val('czekaj...');
+      beforeSend: function() {
+        $("#submit_button").attr("disabled", "disabled");
+        $("#submit_button").val("czekaj...");
       },
-      success: (data) => {
-        submitButton.prop('disabled', false).val('Przydziel');
-        if (data.error) {
-          formMessage.html(data.error);
-          console.log('przydzialModal ERROR');
-          submitButton.val('Przydziel');
+      success: function(data) {
+        $("#submit_button").attr("disabled", false);
+        $("#submit_button").val("Przydziel");
+        if (data.error != "") {
+          $("#form_message").html(data.error);
+          console.log("przydzialModal ERROR");
+          $("#submit_button").val("Przydziel");
         } else {
-          console.log($('#przydzialModal'));
-          console.log('przydzialModal');
-          $('#przydzialModal').modal('hide');
-          console.log('po schowaniu modalu');
-          message.html(data.success);
-          dataTable.ajax.reload();
-
-          setTimeout(() => {
-            message.html('');
+          console.log($("#przydzialModal"));
+          console.log("przydzialModal");
+          $("#przydzialModal").modal("hide");
+          console.log("po schowaniu modalu");
+          $("#message").html(data.success);
+          setTimeout(function() {
+            $("#message").html("");
           }, 5000);
+          dataTable.ajax.reload();
         }
       },
-      error: (xhr, status, error) => {
+      error: function(xhr, status, error) {
         console.log(xhr);
         console.log(status);
         console.log(error);
-      },
+      }
     });
   }
 });
-
 
 </script>
 
