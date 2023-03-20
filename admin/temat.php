@@ -434,7 +434,7 @@ $('#przydzial_form').on('submit', function(event){
         if (data.error != "") {
           console.log("przydzialModal ERROR");
           $("#form_message").html(data.error);
-          $("#submit_button").val("Przydziel");
+          $("#submit_button").val("Error");
         } else {
           console.log("Before hiding modal...");
           $("#przydzialModal").modal("hide");
