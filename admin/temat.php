@@ -431,7 +431,7 @@ $('#przydzial_form').on('submit', function(event){
         $("#submit_button").prop("disabled", false);
         $("#submit_button").val("Przydziel");
 
-        if (data.success.indexOf('Przydzielono') != -1) {
+        if(data.success) {
           console.log("Before hiding modal...");
           $("#przydzialModal").modal("hide");
           console.log("After hiding modal...");
@@ -447,10 +447,11 @@ $('#przydzial_form').on('submit', function(event){
           $("#form_message").html(data.error);
           $("#submit_button").val("Przydziel");
         }
-      },
+      }
     });
   }
 });
+
 
 </script>
 
