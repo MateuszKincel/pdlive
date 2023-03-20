@@ -214,48 +214,52 @@ if($_POST["action"] == 'fetch_single')
 
 if($_POST["action"] == 'Przydziel')
 {
-	if(isset($_POST["action"]) && $_POST["action"] === 'Przydziel') {
-	$success = '';
 	$error = '';
-	// Get number of topics and number of promotors
-	$liczba_tematow = intval($_POST["liczba_tematow"]);
+
+	$success = '';
+    // Get number of topics and number of promotors
+	$liczba_tematow = $_POST["liczba_tematow"];
 	$object->query = "SELECT * FROM promotor";
 	$result = $object->get_result();
 	$liczba_promotorow = $result->rowCount();
 
 	// Divide the number of topics by the number of promotors
-$temat_na_promotora = floor($liczba_tematow / $liczba_promotorow);
-$remaining_topics = $liczba_tematow % $liczba_promotorow;
+	$temat_na_promotora = floor($liczba_tematow / $liczba_promotorow);
+	$remaining_topics = $liczba_tematow % $liczba_promotorow;
 
-// Prepare the update query and bind the parameter for the topic count
-$object->query = "UPDATE promotor SET promotor_liczba_tematow = :topics WHERE promotor_id = :id";
-$object->statement = $object->connect->prepare($object->query);
-$object->statement->bindParam(':topics', $temat_na_promotora, PDO::PARAM_INT);
-$object->statement->bindParam(':id', $promotor_id, PDO::PARAM_INT);
+	// Prepare the update query and bind the parameter for the topic count
+	$object->query = "UPDATE promotor SET promotor_liczba_tematow = :topics WHERE promotor_id = :id";
+	$object->statement = $object->connect->prepare($object->query);
+	$object->statement->bindParam(':topics', $temat_na_promotora);
 
-// Loop through the result and update each row
-foreach ($result as $row) {
-    $promotor_id = $row['promotor_id'];
-    if ($remaining_topics > 0) {
-        $object->statement->bindValue(':topics', $temat_na_promotora + 1, PDO::PARAM_INT);
-        $remaining_topics--;
-    } else {
-        $object->statement->bindValue(':topics', $temat_na_promotora, PDO::PARAM_INT);
-    }
-    $object->statement->execute();
-}
-
-$object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FROM promotor";
-$statement = $object->execute();
-$promotors = $object->statement_result();
-$success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
-	
+	// Loop through the result and update each row
+	foreach ($result as $row) {
+		$promotor_id = $row['promotor_id'];
+		if ($remaining_topics > 0) {
+			$object->statement->bindValue(':topics', $temat_na_promotora + 1);
+			$remaining_topics--;
+		} else {
+			$object->statement->bindValue(':topics', $temat_na_promotora);
+		}
+		$object->statement->bindValue(':id', $promotor_id);
+		$object->statement->execute();
+	}
 
     $object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FROM promotor";
     $statement = $object->execute();
 	$promotors = $object->statement_result();
 	$success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
 	
+	$output = array(
+				'error'		=>	$error,
+				'success'	=>	$success
+				
+			);
+
+	echo json_encode($output);
+
+	
+
 			$object->query = "SELECT * FROM promotor";
 			$promotor_emails = $object->get_result();
 
@@ -268,41 +272,32 @@ $success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div
 
 			$admin_nazwa = $admin_data_row['admin_nazwa'];
 			$admin_email = $admin_data_row['admin_adres_email'];
+
 			$repplyTo = $admin_email;
-foreach ($promotor_emails as $promotor_email) {
-    $promotor_adres_email = $promotor_email['promotor_adres_email'];
-    $recipient = $promotor_adres_email;
+			foreach ($promotor_emails as $promotor_email) {
+				$promotor_adres_email = $promotor_email['promotor_adres_email'];
+				$recipient = $promotor_adres_email;
 
-    $message = 'Administrator '.$admin_nazwa.'  zmienił liczbę twoich tematów na: '. $temat_na_promotora.'';
-    $subject = 'Powiadomienie od administratora!';
-    $message_body = '<p>Twoj administrator '.$admin_nazwa.'  wysłał do ciebie wiadomość:</p>
-    <p>'.$message.'</p>
-    <p>  </p>
-    <p>  </p>
-    <p>Odpowiedź na tą wiadomość zostanie wysłana na e-mail: '.$admin_email.'</p>
-    <p></p>
-    <p>Z poważaniem</p>
-    <p><b>epraca.site</b></p>';
+				$message = 'Administrator '.$admin_nazwa.'  zmienił liczbę twoich tematów na: '. $temat_na_promotora.'';
+				$subject = 'Powiadomienie od administratora!';
+				$message_body = '<p>Twoj administrator '.$admin_nazwa.'  wysłał do ciebie wiadomość:</p>
+				<p>'.$message.'</p>
+				<p>  </p>
+				<p>  </p>
+				<p>Odpowiedź na tą wiadomość zostanie wysłana na e-mail: '.$admin_email.'</p>
+				<p></p>
+				<p>Z poważaniem</p>
+				<p><b>E-Praca.pl</b></p>';
 
-    $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
-}
-
-if($object) {
-    $success .= '<div class="alert alert-success">Wysłano powiadomienie E-mail</div>';
-} else {
-    $error .= '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
-}
-
-$output = array(
-    'error'     =>  $error,
-    'success'   =>  $success
-    
-);
-	}
-echo json_encode($output);
-console.log($output);
-		
-	}			
+				$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
+			}
+			
+			if($object) {
+				echo '<div class="alert alert-success">Wysłano powiadomienie E-mail</div>';
+			} else {
+				echo '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
+			}
+		}			
 			
 	
 	
