@@ -128,6 +128,7 @@ include('header.php');
         		<div class="modal-footer">
           			<input type="hidden" name="hidden_id" id="hidden_id" />
           			<input type="hidden" name="action" id="action" value="update_single" />
+					<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Edytuj" />
           			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
         		</div>
       		</div>
@@ -323,12 +324,10 @@ $(document).on('click', '.edit_button', function() {
     dataType: "JSON",
     success: function(data) {
       // Display the fetched promotor_liczba_tematow value in the modal
-	  $('#liczba_tematow').val(data.promotor_liczba_tematow);
+      $('#liczba_tematow').val(data.promotor_liczba_tematow);
       $('#promotor_adres_email').val(data.promotor_adres_email);
       $('#hidden_id').val(promotor_id);
       $('#modal_title').text('Edytuj liczbę tematów');
-      $('#submit_button').val('Edytuj');
-      $('#action').val('Edit');
       
       // Show the liczbaTematowModal
       $('#liczbaTematowModal').modal('show');
@@ -341,10 +340,13 @@ $(document).on('click', '.edit_button', function() {
 });
 
 
-// Add an event listener to save button
-$('#submit_button').off('click').on('click', function() {
+// Add an event listener to form submit
+$('#liczba_form').submit(function(event) {
+  event.preventDefault(); // Prevent default form submission
+  
   // Get the new value of promotor_liczba_tematow from the input field
-  var new_value = $('#temat_input').val();
+  var new_value = $('#liczba_tematow').val();
+  var promotor_id = $('#hidden_id').val();
   
   // Send an AJAX request to update the promotor_liczba_tematow value in the database
   $.ajax({
@@ -353,8 +355,8 @@ $('#submit_button').off('click').on('click', function() {
     data: {promotor_id: promotor_id, promotor_liczba_tematow: new_value, action: 'update_single'},
     dataType: "JSON",
     success: function(response) {
-      // Close the editModal
-      $('#editModal').modal('hide');
+      // Close the liczbaTematowModal
+      $('#liczbaTematowModal').modal('hide');
       
       // Reload the datatable
       $('#example').DataTable().ajax.reload();
