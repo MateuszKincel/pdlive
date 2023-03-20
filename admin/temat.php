@@ -408,52 +408,57 @@ $('#przydzial_button').click(function(){
 });
 
 $('#przydzial_form').on('submit', function(event){
-  event.preventDefault();
-  if($('#przydzial_form').parsley().isValid()) {       
-    $.ajax({
-      url: "temat_akcja.php",
-      method: "POST",
-      data: new FormData(this),
-      dataType: "json",
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function() {
-        $("#submit_button").attr("disabled", "disabled");
-        $("#submit_button").val("czekaj...");
-      },
-      success: function(data) {
-			$("#submit_button").prop("disabled", false);
-			$("#submit_button").val("Przydziel");
+event.preventDefault();
+console.log("Submitting form...");
+if($('#przydzial_form').parsley().isValid()) {
+$.ajax({
+url: "temat_akcja.php",
+method: "POST",
+data: new FormData(this),
+dataType: "json",
+contentType: false,
+cache: false,
+processData: false,
+beforeSend: function() {
+$("#submit_button").attr("disabled", "disabled");
+$("#submit_button").val("czekaj...");
+console.log("Before send...");
+},
+success: function(data) {
+console.log("Success...");
+console.log(data);
+$("#submit_button").prop("disabled", false);
+$("#submit_button").val("Przydziel");
+ if (data.error != "") {
+      console.log("przydzialModal ERROR");
+      $("#form_message").html(data.error);
+      $("#submit_button").val("Przydziel");
+    } else {
+      console.log($("#przydzialModal"));
+      console.log("przydzialModal");
 
-			if (data.error != "") {
-				$("#form_message").html(data.error);
-				console.log("przydzialModal ERROR");
-				$("#submit_button").val("Przydziel");
-			} else {
-				console.log($("#przydzialModal"));
-				console.log("przydzialModal");
-
-				if ($('#przydzialModal').is(':visible')) {
-				$("#przydzialModal").modal("hide");
-				console.log("po schowaniu modalu");
-				}
-				
-				$("#message").html(data.success);
-				dataTable.ajax.reload();
-
-				setTimeout(function() {
-				$("#message").html("");
-				}, 5000);
-			}
-			},
-      error: function(xhr, status, error) {
-        console.log(xhr);
-        console.log(status);
-        console.log(error);
+      if ($('#przydzialModal').is(':visible')) {
+        console.log("Hiding modal...");
+        $("#przydzialModal").modal("hide");
+        console.log("Modal hidden...");
       }
-    });
+      
+      $("#message").html(data.success);
+      dataTable.ajax.reload();
+
+      setTimeout(function() {
+        $("#message").html("");
+      }, 5000);
+    }
+  },
+  error: function(xhr, status, error) {
+    console.log("Error...");
+    console.log(xhr);
+    console.log(status);
+    console.log(error);
   }
+});
+}
 });
 
 </script>
