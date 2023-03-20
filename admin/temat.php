@@ -306,59 +306,84 @@ $(document).on('click', '.view_button', function(){
     })
 });
 
-
-$(document).on('click', '.edit_button', function(){
-    var promotor_id = $(this).data('id');
-    console.log(promotor_id);
-    $.ajax({
-        url:"temat_akcja.php",
-        method:"POST",
-        data:{promotor_id:promotor_id, action:'edit_single'},
-        dataType:'JSON',
-        success:function(data)
-        {
-            console.log(data);
-            var html = '<div class="table-responsive">';
-            html += '<table class="table">';
-            html += '<tr><th width="40%" class="text-right">Tematy :</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
-            html += '</table></div>';
-
-            $('#editModal').modal('show');
-            $('#temat_liczba').html(html);
-
-            // Add a "Save" button if it does not exist
-            if (!$('#save_btn').length) {
-                var save_button = '<button type="button" class="btn btn-primary" id="save_btn">Zapisz</button>';
-                $('#modal_footer').html(save_button);
-            }
-
-            // Bind click event for save button
-            $('#save_btn').off('click').on('click', function() {
-                var newTematValue = $('#temat_input').val();
-                updateTematValue(promotor_id, newTematValue);
-            });
-        }
-    });
+$(document).on('click', '.edit_button', function() {
+  var promotor_id = $(this).data('id');
+  
+  // Send an AJAX request to fetch promotor_liczba_tematow value by promotor_id
+  $.ajax({
+    url: "temat_akcja.php",
+    method: "POST",
+    data: {promotor_id: promotor_id, action: 'edit_single'},
+    dataType: "JSON",
+    success: function(data) {
+      // Display the fetched promotor_liczba_tematow value in the modal
+      var html = '<div class="table-responsive">';
+      html += '<table class="table">';
+      html += '<tr><th width="40%" class="text-right">Temat '+ data.promotor_liczba_tematow +':</th><td width="60%"><input type="text" id="temat_input" value="'+ data.promotor_liczba_tematow +'"></td></tr>';
+      html += '</table></div>';
+      $('#temat_liczba').html(html);
+      
+      // Show the editModal
+      $('#editModal').modal('show');
+      
+      // Add an event listener to save button
+      $('#save_btn').off('click').on('click', function() {
+        // Get the new value of promotor_liczba_tematow from the input field
+        var new_value = $('#temat_input').val();
+        
+        // Send an AJAX request to update the promotor_liczba_tematow value in the database
+        $.ajax({
+          url: "temat_akcja.php",
+          method: "POST",
+          data: {promotor_id: promotor_id, promotor_liczba_tematow: new_value, action: 'update_single'},
+          dataType: "JSON",
+          success: function(response) {
+            // Close the editModal
+            $('#editModal').modal('hide');
+            
+            // Reload the datatable
+            $('#example').DataTable().ajax.reload();
+          },
+          error: function(xhr, status, error) {
+            // Display an error message
+            console.log("Error: " + error);
+          }
+        });
+      });
+    },
+    error: function(xhr, status, error) {
+      // Display an error message
+      console.log("Error: " + error);
+    }
+  });
 });
 
+function updatePromotorLiczbaTematow(promotor_id, new_value) {
+  $.ajax({
+    url: "update_promotor_liczba_tematow.php",
+    method: "POST",
+    data: { promotor_id: promotor_id, new_value: new_value },
+    dataType: "JSON",
+    success: function(data) {
+      if (data.success) {
+        // Update the value in the table cell
+        var table = $('#example').DataTable();
+        var row = table.row($('#promotor_' + promotor_id));
+        row.data()[3] = new_value;
+        row.draw(false);
 
-
-function updateTematValue(promotor_id, newTematValue) {
-    $.ajax({
-        url: "temat_akcja.php",
-        method: "POST",
-        data: {promotor_id: promotor_id, new_temat_value: newTematValue, action: 'update_single'},
-        dataType: 'JSON',
-        success: function(data) {
-            // Handle success here
-            $('#editModal').modal('hide');
-        },
-        error: function(xhr, status, error) {
-            // Handle errors here
-            console.log("Error: " + error);
-        }
-    });
+        // Hide the modal
+        $('#editModal').modal('hide');
+      } else {
+        alert(data.error);
+      }
+    },
+    error: function(xhr, status, error) {
+      alert("An error occurred while updating the value: " + error);
+    }
+  });
 }
+
 
 	$(document).on('click', '.delete_button', function(){
 

@@ -134,37 +134,7 @@ if($_POST["action"] == 'fetch_single')
     echo json_encode($data);
 }
 
-		if ($_POST["action"] == 'edit_single') {
-			$promotor_id = $_POST["promotor_id"];
-
-			$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
-
-			$result = $object->get_result();
-
-			if ($result->num_rows == 1) {
-				$row = $result->fetch_assoc();
-				$data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
-			} else {
-				$data = array('promotor_liczba_tematow' => null);
-			}
-
-			echo json_encode($data);
-		}
-
-
-	if ($_POST["action"] == 'update_single') {
-    $promotor_id = $_POST["promotor_id"];
-    $new_temat_value = $_POST["new_temat_value"];
-
-    $query = "UPDATE promotor SET promotor_liczba_tematow = '$new_temat_value' WHERE promotor_id = '$promotor_id'";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        echo json_encode(array("status" => "success", "message" => "Liczba tematów została zaktualizowana."));
-    } else {
-        echo json_encode(array("status" => "error", "message" => "Błąd podczas aktualizacji liczby tematów."));
-    }
-}
+		
 
 
 
