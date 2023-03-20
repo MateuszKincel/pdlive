@@ -277,32 +277,27 @@ $(document).ready(function(){
 
 
 
-$(document).on('click', '.view_button', function(){
+$(document).on('click', '.edit_button', function(){
     var promotor_id = $(this).data('id');
 
     $.ajax({
         url:"temat_akcja.php",
         method:"POST",
-        data:{promotor_id:promotor_id, action:'fetch_single'},
+        data:{promotor_id:promotor_id, action:'edit_single'},
         dataType:'JSON',
         success:function(data)
         {
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
-
-			for(var i = 0; i < data.length; i++) {
-
-				html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td></tr>' + '<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
-			}
-
+            html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
             html += '</table></div>';
 
-            $('#viewModal').modal('show');
-
+            $('#editModal').modal('show');
             $('#temat_details').html(html);
         }
-    })
+    });
 });
+
 
 $(document).on('click', '.edit_button', function(){
     var promotor_id = $(this).data('id');
