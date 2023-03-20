@@ -435,6 +435,7 @@ $('#przydzial_button').click(function(){
 					}
 					else
 					{
+						console.log('im here!')
 						$('#przydzialModal').modal('hide');
 						$('#message').html(data.success);
 						dataTable.ajax.reload();
