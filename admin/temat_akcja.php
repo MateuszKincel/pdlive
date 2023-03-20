@@ -134,21 +134,22 @@ if($_POST["action"] == 'fetch_single')
     echo json_encode($data);
 }
 
-	if($_POST["action"] == 'edit_single')
+		if($_POST["action"] == 'edit_single')
 	{
+		$promotor_id = $_POST["promotor_id"];
+
 		$object->query = "
-		SELECT * FROM promotor 
-		WHERE promotor_liczba_tematow = '".$_POST["promotor_id"]."'
+			SELECT * FROM promotor 
+			WHERE promotor_id = '$promotor_id'
 		";
 
 		$result = $object->get_result();
 
 		$data = array();
 
-		foreach($result as $row)
-		{
+		if ($result->num_rows == 1) {
+			$row = $result->fetch_assoc();
 			$data['promotor_liczba_tematow'] = $row['promotor_liczba_tematow'];
-	
 		}
 
 		echo json_encode($data);
