@@ -137,7 +137,7 @@ if($_POST["action"] == 'fetch_single')
 		if ($_POST["action"] == 'edit_single') {
 			
 			var_dump($promotor_id);
-			$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
+			$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '".$_POST["promotor_id"]."'";
 
 
 			$result = $object->get_result();

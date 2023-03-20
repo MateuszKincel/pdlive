@@ -307,7 +307,7 @@ $(document).on('click', '.view_button', function(){
 
 $(document).on('click', '.edit_button', function(){
     var promotor_id = $(this).data('id');
-
+console.log(promotor_id);
     $.ajax({
         url:"temat_akcja.php",
         method:"POST",
@@ -315,6 +315,7 @@ $(document).on('click', '.edit_button', function(){
         dataType:'JSON',
         success:function(data)
         {
+
 			console.log(data);
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
