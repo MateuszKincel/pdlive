@@ -254,7 +254,7 @@ $(document).ready(function(){
 			],
 			
 		});
-	});
+	
 		
 	
 
@@ -452,7 +452,7 @@ $('#przydzial_form').on('submit', function(event){
   }
 });
 
-
+}); // datatable end bracket
 </script>
 
 
