@@ -325,7 +325,6 @@ $(document).on('click', '.edit_button', function(){
         }
     });
 });
-``
 
 
 function updateTematValue(promotor_id, newTematValue) {
