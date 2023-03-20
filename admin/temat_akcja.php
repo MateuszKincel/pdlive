@@ -249,7 +249,7 @@ $object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FR
 $statement = $object->execute();
 $promotors = $object->statement_result();
 $success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
-	}
+	
 
     $object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FROM promotor";
     $statement = $object->execute();
@@ -286,7 +286,7 @@ foreach ($promotor_emails as $promotor_email) {
 
     $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
 }
-
+}
 if($object) {
     $success .= '<div class="alert alert-success">Wysłano powiadomienie E-mail</div>';
 } else {
