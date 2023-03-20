@@ -178,6 +178,7 @@ if($_POST["action"] == 'edit_single')
 }
 
 if($_POST["action"] == 'update_single')
+$output = array();
 {
     $query = "
     UPDATE promotor SET
