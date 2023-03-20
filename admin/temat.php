@@ -316,18 +316,19 @@ $(document).on('click', '.edit_button', function(){
         {
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
-
-			for(var i = 0; i < data.length; i++) {
-				html += '<tr><th width="40%" class="text-right">Temat 'data[]':</th><td width="60%">'+data[i].promotor_liczba_tematow'</td></tr>';
-			}
-
+            html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
             html += '</table></div>';
 
             $('#editModal').modal('show');
-
             $('#temat_details').html(html);
+
+            // Unbind click event for submit button and bind it again
+            $('#submit_btn').off('click').on('click', function() {
+                var newTematValue = $('#temat_input').val();
+                updateTematValue(promotor_id, newTematValue);
+            });
         }
-    })
+    });
 });
 
 
