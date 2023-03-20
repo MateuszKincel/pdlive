@@ -326,18 +326,21 @@ $(document).on('click', '.edit_button', function(){
             $('#editModal').modal('show');
             $('#temat_liczba').html(html);
 
-            // Add a "Save" button
-            var save_button = '<button type="button" class="btn btn-primary" id="save_button">Save changes</button>';
-            $('#modal_footer').html(save_button);
+            // Add a "Save" button if it does not exist
+            if (!$('#save_btn').length) {
+                var save_button = '<button type="button" class="btn btn-primary" id="save_btn">Zapisz</button>';
+                $('#modal_footer').html(save_button);
+            }
 
             // Bind click event for save button
-            $('#save_button').off('click').on('click', function() {
+            $('#save_btn').off('click').on('click', function() {
                 var newTematValue = $('#temat_input').val();
                 updateTematValue(promotor_id, newTematValue);
             });
         }
     });
 });
+
 
 
 function updateTematValue(promotor_id, newTematValue) {
