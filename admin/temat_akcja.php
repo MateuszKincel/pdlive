@@ -300,7 +300,6 @@ $output = array(
 );
 	
 echo json_encode($output);
-echo console.log($output);
 		
 	}			
 			
