@@ -286,7 +286,7 @@ foreach ($promotor_emails as $promotor_email) {
 
     $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
 }
-}
+
 if($object) {
     $success .= '<div class="alert alert-success">Wysłano powiadomienie E-mail</div>';
 } else {
@@ -301,6 +301,8 @@ $output = array(
 
 echo json_encode($output);
 			}
+			}
+			
 	
 	
 
