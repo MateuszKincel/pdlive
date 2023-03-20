@@ -359,7 +359,8 @@ $('#liczba_form').submit(function(event) {
       $('#liczbaTematowModal').modal('hide');
       
       // Reload the datatable
-      $('#example').DataTable().ajax.reload();
+      dataTable().ajax.reload();
+	  updateTopicsTotal();
     },
     error: function(xhr, status, error) {
       // Display an error message
