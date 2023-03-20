@@ -440,9 +440,9 @@ $('#przydzial_form').on('submit', function(event){
           console.log("przydzialModal");
 
           if ($('#przydzialModal').is(':visible')) {
-            console.log("Hiding modal...");
-            $("#przydzialModal").modal("hide");
-            console.log("Modal hidden...");
+            console.log("Before hiding modal...");
+			$("#przydzialModal").modal("hide");
+			console.log("After hiding modal...");
           }
 
           $("#message").html(data.success);
