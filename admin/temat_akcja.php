@@ -70,7 +70,8 @@ if(isset($_POST["action"]))
 			if($_SESSION["type"] == "Admin") {
 			$sub_array[] = $row["promotor_nazwa"];
 			$sub_array[] = $row["promotor_liczba_tematow"];
-			$sub_array[] = '<button type="button"   name="view_button" class="btn btn-info btn-circle view_button" data-id="'.$row["promotor_id"].'" title="Podgląd tematów"><i class="fa-sharp fa-solid fa-eye"></i></button>';
+			$sub_array[] = '<button type="button"   name="view_button" class="btn btn-info btn-circle view_button" data-id="'.$row["promotor_id"].'" title="Podgląd tematów"><i class="fa-sharp fa-solid fa-eye"></i></button> 
+							<button type="button"   name="edit_button" class="btn btn-warning btn-circle edit_button" data-id="'.$row["promotor_id"].'" title="Edytuj liczbę tematów."><i class="fa-sharp fa-solid fa-cog"></i></button>';
 		} else if ($_SESSION["type"] == "Promotor") {
 			$sub_array[] = $row["temat_grupa"];
 			$sub_array[] = $row["temat"];
