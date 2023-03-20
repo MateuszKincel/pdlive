@@ -316,19 +316,15 @@ $(document).on('click', '.edit_button', function(){
         {
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
-
-			for(var i = 0; i < data.length; i++) {
-				html += '<tr><th width="40%" class="text-right">Temat 'data[i]':</th><td width="60%">'+data[i].promotor_liczba_tematow'</td></tr>';
-			}
-
+            html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%">'+data.promotor_liczba_tematow+'</td></tr>';
             html += '</table></div>';
 
             $('#editModal').modal('show');
-
             $('#temat_details').html(html);
         }
     })
 });
+
 
 
 
