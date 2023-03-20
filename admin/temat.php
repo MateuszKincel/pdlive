@@ -431,11 +431,10 @@ $('#przydzial_form').on('submit', function(event){
         $("#submit_button").prop("disabled", false);
         $("#submit_button").val("Przydziel");
 
-        if (data.error != "") {
           console.log("przydzialModal ERROR");
           $("#form_message").html(data.error);
           $("#submit_button").val("Przydziel");
-        } else {
+
           if ($('#przydzialModal').is(':visible')) { 
             console.log("Before hiding modal...");
             $("#przydzialModal").modal("hide");
@@ -449,13 +448,9 @@ $('#przydzial_form').on('submit', function(event){
             $("#message").html("");
           }, 5000);
         }
-      },
-    });
-  }
-});
-
-
-
+	});
+	  }
+	});
 </script>
 
 
