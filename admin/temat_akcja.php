@@ -135,10 +135,9 @@ if($_POST["action"] == 'fetch_single')
 }
 
 		if ($_POST["action"] == 'edit_single') {
-			
-			var_dump($promotor_id);
-			$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '".$_POST["promotor_id"]."'";
+			$promotor_id = $_POST["promotor_id"];
 
+			$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
 
 			$result = $object->get_result();
 
@@ -146,7 +145,7 @@ if($_POST["action"] == 'fetch_single')
 				$row = $result->fetch_assoc();
 				$data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
 			} else {
-				$data = array('promotor_liczba_tematow' => 'Błąd!');
+				$data = array('promotor_liczba_tematow' => null);
 			}
 
 			echo json_encode($data);

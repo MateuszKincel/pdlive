@@ -307,7 +307,7 @@ $(document).on('click', '.view_button', function(){
 
 $(document).on('click', '.edit_button', function(){
     var promotor_id = $(this).data('id');
-console.log(promotor_id);
+    console.log(promotor_id);
     $.ajax({
         url:"temat_akcja.php",
         method:"POST",
@@ -315,8 +315,7 @@ console.log(promotor_id);
         dataType:'JSON',
         success:function(data)
         {
-
-			console.log(data);
+            console.log(data);
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
             html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
@@ -325,14 +324,19 @@ console.log(promotor_id);
             $('#editModal').modal('show');
             $('#temat_liczba').html(html);
 
-            // Unbind click event for submit button and bind it again
-            $('#submit_btn').off('click').on('click', function() {
+            // Add a "Save" button
+            var save_button = '<button type="button" class="btn btn-primary" id="save_button">Save changes</button>';
+            $('#modal_footer').html(save_button);
+
+            // Bind click event for save button
+            $('#save_button').off('click').on('click', function() {
                 var newTematValue = $('#temat_input').val();
                 updateTematValue(promotor_id, newTematValue);
             });
         }
     });
 });
+
 
 function updateTematValue(promotor_id, newTematValue) {
     $.ajax({
