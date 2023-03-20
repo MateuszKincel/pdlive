@@ -431,7 +431,7 @@ $('#przydzial_form').on('submit', function(event){
         $("#submit_button").prop("disabled", false);
         $("#submit_button").val("Przydziel");
 
-        if (data.error != "") {
+        if (data.error !== null) {
           console.log("przydzialModal ERROR");
           $("#form_message").html(data.error);
           $("#submit_button").val("Error");
