@@ -399,7 +399,7 @@ $(document).on('click', '.view_button', function(){
 $('#przydzial_button').click(function(){
   console.log("przydzialModal");
 //   $('#przydzial_form')[0].reset();
-  $('#form').parsley().reset();
+  $('#przydzial_form').parsley().reset();
   $('#modal_title').text('Przydziel liczbę tematów');
   $('#action').val('Przydziel');
   $('#submit_button').val('Przydziel');
