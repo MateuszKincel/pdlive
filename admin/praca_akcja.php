@@ -428,7 +428,7 @@ if(isset($_POST["action"]))
             <p>  </p>
             <p>  </p>
             <p>Z poważaniem</p>
-            <p><b>E-Praca.pl</b></p>';
+            <p><b>epraca.site</b></p>';
 
             $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
             
@@ -508,14 +508,14 @@ if(isset($_POST["action"]))
 			$repplyTo = $promotor_adres_email;
 			$message = $_POST['komentarz_promotora'];
 			$recipient = $student_email;
-			$subject = 'Twoja praca została zaakceptowana na portalu E-Praca.pl';
+			$subject = 'Twoja praca została zaakceptowana na portalu epraca.site';
 			$message_body = '<p>Twoja praca została zaakceptowana przez: '.$promotor_nazwa.'</p>
 			<p>'.$message.'</p>
 			<p>  </p>
 			<p>  </p>
 			<p>Wiadomość wygenerowana automatycznie, prosimy na nią nie odpowiadać.</p>
 			<p>Z poważaniem</p>
-			<p><b>E-Praca.pl</b></p>';
+			<p><b>epraca.site</b></p>';
 
 
 			$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
@@ -581,14 +581,14 @@ if(isset($_POST["action"]))
 			$repplyTo = $promotor_adres_email;
 			$message = $_POST['komentarz_promotora'];
 			$recipient = $student_email;
-			$subject = 'Zmiana statusu pracy na portalu E-Praca.pl';
+			$subject = 'Zmiana statusu pracy na portalu epraca.site';
 			$message_body = '<p>Twoja praca właśnie zmieniła status na: '.$_POST["postep"].' ukończenia.</p>
 			<p>'.$message.'</p>
 			<p>  </p>
 			<p>  </p>
 			<p>Wiadomość wygenerowana automatycznie, prosimy na nią nie odpowiadać.</p>
 			<p>Z poważaniem</p>
-			<p><b>E-Praca.pl</b></p>';
+			<p><b>epraca.site</b></p>';
 
 
 			$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
@@ -699,7 +699,7 @@ if($_POST["action"] == 'notify-pd')
         <p>  </p>
         <p>Odpowiedź na tą wiadomość zostanie wysłana na e-mail: '.$promotor_adres_email.'</p>
         <p>Z poważaniem</p>
-        <p><b>E-Praca.pl</b></p>';
+        <p><b>epraca.site</b></p>';
 
         $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
 
@@ -753,14 +753,14 @@ if($_POST["action"] == 'notify-pd')
 			$repplyTo = $promotor_adres_email;
 			$message = $_POST['wiadomosc_promotora'];
 			$recipient = $student_email;
-			$subject = 'Twoja praca została została usunięta z portalu E-Praca.pl';
+			$subject = 'Twoja praca została została usunięta z portalu epraca.site';
 			$message_body = '<p>Twoja praca została usunięta przez: '.$promotor_nazwa.'</p>
 			<p>Powód:'.$message.'</p>
 			<p>  </p>
 			<p>  </p>
 			<p>Wiadomość wygenerowana automatycznie, prosimy na nią nie odpowiadać.</p>
 			<p>Z poważaniem</p>
-			<p><b>E-Praca.pl</b></p>';
+			<p><b>epraca.site</b></p>';
 
 
 			$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
@@ -816,14 +816,14 @@ if($_POST["action"] == 'notify-pd')
 			$repplyTo = $promotor_adres_email;
 			$message = $_POST['wiadomosc_promotora'];
 			$recipient = $student_email;
-			$subject = 'Twoja praca została została odrzucona z portalu E-Praca.pl';
+			$subject = 'Twoja praca została została odrzucona z portalu epraca.site';
 			$message_body = '<p>Twoja praca została odrzucona przez: '.$promotor_nazwa.'</p>
 			<p>Powód:'.$message.'</p>
 			<p>  </p>
 			<p>  </p>
 			<p>Wiadomość wygenerowana automatycznie, prosimy na nią nie odpowiadać.</p>
 			<p>Z poważaniem</p>
-			<p><b>E-Praca.pl</b></p>';
+			<p><b>epraca.site</b></p>';
 
 
 			$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
@@ -879,14 +879,14 @@ if($_POST["action"] == 'notify-pd')
 			$repplyTo = $promotor_adres_email;
 			$message = $_POST['wiadomosc_promotora'];
 			$recipient = $student_email;
-			$subject = 'Twoja praca została została odrzucona z portalu E-Praca.pl';
+			$subject = 'Twoja praca została została odrzucona z portalu epraca.site';
 			$message_body = '<p>Twoja praca została odrzucona przez: '.$promotor_nazwa.'</p>
 			<p>Powód:'.$message.'</p>
 			<p>  </p>
 			<p>  </p>
 			<p>Wiadomość wygenerowana automatycznie, prosimy na nią nie odpowiadać.</p>
 			<p>Z poważaniem</p>
-			<p><b>E-Praca.pl</b></p>';
+			<p><b>epraca.site</b></p>';
 
 
 			$object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);

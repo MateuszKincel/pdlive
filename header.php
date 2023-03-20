@@ -39,7 +39,7 @@
 	<body>
 		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
 			<div class="col">
-		    	<h5 class="my-0 mr-md-auto font-weight-normal"><a href="index.php">E-Praca.pl</a></h5>
+		    	<h5 class="my-0 mr-md-auto font-weight-normal"><a href="index.php">epraca.site</a></h5>
 		    </div>
 		    <?php
 		    if(!isset($_SESSION['student_id']))

@@ -274,7 +274,7 @@ foreach ($promotor_emails as $promotor_email) {
     <p>Odpowiedź na tą wiadomość zostanie wysłana na e-mail: '.$admin_email.'</p>
     <p></p>
     <p>Z poważaniem</p>
-    <p><b>E-Praca.pl</b></p>';
+    <p><b>epraca.site</b></p>';
 
     $object->send_mail($message, $subject, $message_body, $recipient, $repplyTo);
 }
