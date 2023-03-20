@@ -135,21 +135,21 @@ if($_POST["action"] == 'fetch_single')
 }
 
 		if ($_POST["action"] == 'edit_single') {
-    $promotor_id = $_POST["promotor_id"];
+		$promotor_id = $_POST["promotor_id"];
 
-    $object->query = "SELECT * FROM temat WHERE promotor_id = '".$_POST["promotor_id"]."'";
+		$object->query = "SELECT * FROM promotor WHERE promotor_id = '".$_POST["promotor_id"]."'";
 
-	$result = $object->get_result();
+		$result = $object->get_result();
 
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
-    } else {
-        $data = array('promotor_liczba_tematow' => null);
-    }
+		if ($result->num_rows == 1) {
+			$row = $result->fetch_assoc();
+			$data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
+		} else {
+			$data = array('promotor_liczba_tematow' => null);
+		}
 
-    echo json_encode($data);
-}
+		echo json_encode($data);
+	}
 
 	if ($_POST["action"] == 'update_single') {
     $promotor_id = $_POST["promotor_id"];
