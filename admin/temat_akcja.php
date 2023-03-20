@@ -158,16 +158,22 @@ if ($_POST["action"] == 'update_single') {
 }
 
 		
-if ($_POST["action"] == 'edit_single') {
-    $promotor_id = $_POST["promotor_id"];
-    $object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
+if($_POST["action"] == 'edit_single')
+{
+    $object->query = "
+    SELECT promotor_liczba_tematow FROM promotor 
+    WHERE promotor_id = '".$_POST["promotor_id"]."'
+    ";
+
     $result = $object->get_result();
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
-    } else {
-        $data = array('promotor_liczba_tematow' => 'Błąd!');
+
+    $data = array();
+
+    foreach($result as $row)
+    {
+        $data['promotor_liczba_tematow'] = $row['promotor_liczba_tematow'];
     }
+
     echo json_encode($data);
 }
 
@@ -225,7 +231,7 @@ $success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div
 			$admin_nazwa = $admin_data_row['admin_nazwa'];
 			$admin_email = $admin_data_row['admin_adres_email'];
 			$repplyTo = $admin_email;
-			
+
 foreach ($promotor_emails as $promotor_email) {
     $promotor_adres_email = $promotor_email['promotor_adres_email'];
     $recipient = $promotor_adres_email;

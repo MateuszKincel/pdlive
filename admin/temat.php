@@ -111,22 +111,29 @@ include('header.php');
     </div>
 </div>
 
-<div id="editModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal_title">Edycja Liczby Tematów</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body" id="temat_liczba">
-                
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-                <button type="button" class="btn btn-primary" id="save_btn">Zapisz</button>
-            </div>
-        </div>
-    </div>
+<div id="liczbaTematowModal" class="modal fade">
+  	<div class="modal-dialog">
+    	<form method="post" id="liczba_form">
+      		<div class="modal-content">
+        		<div class="modal-header">
+          			<h4 class="modal-title" id="modal_title">Edytuj liczbę tematów</h4>
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		</div>
+        		<div class="modal-body">
+        			<span id="form_message"></span>
+		          	<div class="form-group">
+                                <label>Liczba Tematów: <span class="text-danger"></span></label>
+                                <input type="text" name="promotor_adres_email" id="promotor_adres_email" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
+							</div>							
+        		<div class="modal-footer">
+          			<input type="hidden" name="hidden_id" id="hidden_id" />
+          			<input type="hidden" name="action" id="action" value="Add" />
+          			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Dodaj" />
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+        		</div>
+      		</div>
+    	</form>
+  	</div>
 </div>
 
 
@@ -313,43 +320,18 @@ $(document).on('click', '.edit_button', function() {
   $.ajax({
     url: "temat_akcja.php",
     method: "POST",
-    data: {promotor_id: promotor_id, action: 'edit_single'},
+    data: {promotor_id: promotor_id, action: 'fetch_single'},
     dataType: "JSON",
     success: function(data) {
       // Display the fetched promotor_liczba_tematow value in the modal
-      var html = '<div class="table-responsive">';
-      html += '<table class="table">';
-      html += '<tr><th width="40%" class="text-right">Temat '+ data.promotor_liczba_tematow +':</th><td width="60%"><input type="text" id="temat_input" value="'+ data.promotor_liczba_tematow +'"></td></tr>';
-      html += '</table></div>';
-      $('#temat_liczba').html(html);
+      $('#promotor_adres_email').val(data.promotor_adres_email);
+      $('#hidden_id').val(promotor_id);
+      $('#modal_title').text('Edytuj liczbę tematów');
+      $('#submit_button').val('Edytuj');
+      $('#action').val('Edit');
       
-      // Show the editModal
-      $('#editModal').modal('show');
-      
-      // Add an event listener to save button
-      $('#save_btn').off('click').on('click', function() {
-        // Get the new value of promotor_liczba_tematow from the input field
-        var new_value = $('#temat_input').val();
-        
-        // Send an AJAX request to update the promotor_liczba_tematow value in the database
-        $.ajax({
-          url: "temat_akcja.php",
-          method: "POST",
-          data: {promotor_id: promotor_id, promotor_liczba_tematow: new_value, action: 'update_single'},
-          dataType: "JSON",
-          success: function(response) {
-            // Close the editModal
-            $('#editModal').modal('hide');
-            
-            // Reload the datatable
-            $('#example').DataTable().ajax.reload();
-          },
-          error: function(xhr, status, error) {
-            // Display an error message
-            console.log("Error: " + error);
-          }
-        });
-      });
+      // Show the liczbaTematowModal
+      $('#liczbaTematowModal').modal('show');
     },
     error: function(xhr, status, error) {
       // Display an error message
@@ -358,31 +340,8 @@ $(document).on('click', '.edit_button', function() {
   });
 });
 
-function updatePromotorLiczbaTematow(promotor_id, new_value) {
-  $.ajax({
-    url: "update_promotor_liczba_tematow.php",
-    method: "POST",
-    data: { promotor_id: promotor_id, new_value: new_value },
-    dataType: "JSON",
-    success: function(data) {
-      if (data.success) {
-        // Update the value in the table cell
-        var table = $('#example').DataTable();
-        var row = table.row($('#promotor_' + promotor_id));
-        row.data()[3] = new_value;
-        row.draw(false);
 
-        // Hide the modal
-        $('#editModal').modal('hide');
-      } else {
-        alert(data.error);
-      }
-    },
-    error: function(xhr, status, error) {
-      alert("An error occurred while updating the value: " + error);
-    }
-  });
-}
+
 
 
 	$(document).on('click', '.delete_button', function(){
