@@ -309,6 +309,7 @@ $(document).on('click', '.edit_button', function(){
         dataType:'JSON',
         success:function(data)
         {
+			console.log(data)
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
             html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
