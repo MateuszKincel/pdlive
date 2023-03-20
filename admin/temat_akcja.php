@@ -177,6 +177,27 @@ if($_POST["action"] == 'edit_single')
     echo json_encode($data);
 }
 
+if($_POST["action"] == 'update_single')
+{
+    $query = "
+    UPDATE promotor SET
+    promotor_liczba_tematow = '".$_POST["promotor_liczba_tematow"]."'
+    WHERE promotor_id = '".$_POST["promotor_id"]."'
+    ";
+
+    $object->query = $query;
+
+    if($object->execute())
+    {
+        $output['success'] = true;
+    }
+    else
+    {
+        $output['error'] = "Nie udało się zaktualizować liczby tematów.";
+    }
+
+    echo json_encode($output);
+}
 
 
 if($_POST["action"] == 'Przydziel')

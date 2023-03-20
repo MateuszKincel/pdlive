@@ -123,7 +123,7 @@ include('header.php');
         			<span id="form_message"></span>
 		          	<div class="form-group">
                                 <label>Liczba Tematów: <span class="text-danger"></span></label>
-                                <input type="text" name="liczba_tematow" id="liczba_tematow" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
+                                <input type="number" name="liczba_tematow" id="liczba_tematow" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
 							</div>							
         		<div class="modal-footer">
           			<input type="hidden" name="hidden_id" id="hidden_id" />
@@ -342,6 +342,30 @@ $(document).on('click', '.edit_button', function() {
 });
 
 
+// Add an event listener to save button
+$('#save_btn').off('click').on('click', function() {
+  // Get the new value of promotor_liczba_tematow from the input field
+  var new_value = $('#temat_input').val();
+  
+  // Send an AJAX request to update the promotor_liczba_tematow value in the database
+  $.ajax({
+    url: "temat_akcja.php",
+    method: "POST",
+    data: {promotor_id: promotor_id, promotor_liczba_tematow: new_value, action: 'update_single'},
+    dataType: "JSON",
+    success: function(response) {
+      // Close the editModal
+      $('#editModal').modal('hide');
+      
+      // Reload the datatable
+      $('#example').DataTable().ajax.reload();
+    },
+    error: function(xhr, status, error) {
+      // Display an error message
+      console.log("Error: " + error);
+    }
+  });
+});
 
 
 
