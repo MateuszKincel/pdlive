@@ -36,16 +36,16 @@ class Handler
 
 	function send_mail($message, $subject, $message_body, $recipient, $repplyTo=null) {
     $mail = new PHPMailer(true);
-    $mail->SMTPDebug = 4;
+    $mail->SMTPDebug = 2;
     $mail->isSMTP();
     $mail->CharSet = 'UTF-8';
-    $mail->Host = 'smtp.gmail.com';
-    $mail->Port = '465';
+    $mail->Host = 'smtp.titan.email';
+    $mail->Port = '587';
     $mail->SMTPAuth = true;
-    $mail->Username = 'testprojekt636@gmail.com';
-    $mail->Password = 'hvgbwkzlnizlqmtu';
-    $mail->SMTPSecure = 'ssl';
-    $mail->From = 'testprojekt636@gmail.com';
+    $mail->Username = 'info@epraca.site';
+    $mail->Password = 'J2zgffghh!';
+    $mail->SMTPSecure = 'tls';
+    $mail->From = 'info@epraca.site';
     $mail->FromName = 'E-Praca';
     $mail->addAddress($recipient);
     $mail->WordWrap = 50;
