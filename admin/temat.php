@@ -123,7 +123,7 @@ include('header.php');
         			<span id="form_message"></span>
 		          	<div class="form-group">
                                 <label>Liczba Tematów: <span class="text-danger"></span></label>
-                                <input type="text" name="promotor_adres_email" id="promotor_adres_email" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
+                                <input type="text" name="liczba_tematow" id="liczba_tematow" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
 							</div>							
         		<div class="modal-footer">
           			<input type="hidden" name="hidden_id" id="hidden_id" />
@@ -324,6 +324,7 @@ $(document).on('click', '.edit_button', function() {
     dataType: "JSON",
     success: function(data) {
       // Display the fetched promotor_liczba_tematow value in the modal
+	  $('#liczba_tematow').val(data.promotor_liczba_tematow);
       $('#promotor_adres_email').val(data.promotor_adres_email);
       $('#hidden_id').val(promotor_id);
       $('#modal_title').text('Edytuj liczbę tematów');
