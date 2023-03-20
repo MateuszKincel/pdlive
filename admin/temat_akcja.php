@@ -137,8 +137,9 @@ if($_POST["action"] == 'fetch_single')
 		if ($_POST["action"] == 'edit_single') {
     $promotor_id = $_POST["promotor_id"];
 
-    $query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
-    $result = mysqli_query($conn, $query);
+    $object->query = "SELECT * FROM temat WHERE promotor_id = '".$_POST["promotor_id"]."'";
+
+	$result = $object->get_result();
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
