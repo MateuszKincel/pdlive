@@ -134,82 +134,25 @@ if($_POST["action"] == 'fetch_single')
     echo json_encode($data);
 }
 
+	if($_POST["action"] == 'edit_single')
+	{
+		$object->query = "
+		SELECT * FROM promotor 
+		WHERE promotor_liczba_tematow = '".$_POST["promotor_id"]."'
+		";
 
-// if($_POST["action"] == 'fetch_single')
-// {
-//     $object->query = "
-//     SELECT * FROM temat 
-//     WHERE promotor_id = '".$_POST["promotor_id"]."'
-//     ";
+		$result = $object->get_result();
 
-//     $result = $object->get_result();
+		$data = array();
 
-//     $data = array();
-
-// 	$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '".$_POST["promotor_id"]."'";
-//      // get the number of rows from the promotor_liczba_tematow column
-// 	$promotor_liczba_tematow = $object->get_result()->fetchColumn();
+		foreach($result as $row)
+		{
+			$data['promotor_liczba_tematow'] = $row['promotor_liczba_tematow'];
 	
+		}
 
-//     for($i = 0; $i < $promotor_liczba_tematow; $i++)
-//     {
-//         $data[$i]['temat'] = $result[$i]['temat_name'];
-//     }
-
-//     echo json_encode($data);
-// }
-
-
-
-// if ($_POST["action"] == 'Przydziel') {
-//     $error = '';
-//     $success = '';
-
-//     // Get number of topics and number of promotors
-//     $liczba_tematow = $_POST["liczba_tematow"];
-//     $object->query = "SELECT * FROM promotor";
-//     $result = $object->get_result();
-//     $liczba_promotorow = $result->rowCount();
-
-//     // Divide the number of topics by the number of promotors
-//     $temat_na_promotora = floor($liczba_tematow / $liczba_promotorow);
-//     $remaining_topics = $liczba_tematow % $liczba_promotorow;
-
-//     // Prepare the update query and bind the parameter for the topic count
-//     $object->query = "UPDATE promotor SET promotor_liczba_tematow = :topics WHERE promotor_id = :id";
-//     $object->statement = $object->connect->prepare($object->query);
-
-//     // Loop through the result and update each row
-//     foreach ($result as $row) {
-//         $promotor_id = $row['promotor_id'];
-//         $promotor_email = $row['promotor_adres_email'];
-//         if ($remaining_topics > 0) {
-//             $object->statement->bindValue(':topics', $temat_na_promotora + 1);
-//             $remaining_topics--;
-//         } else {
-//             $object->statement->bindValue(':topics', $temat_na_promotora);
-//         }
-//         $object->statement->bindValue(':id', $promotor_id);
-//         $object->statement->execute();
-
-//         // Send an email to the promotor
-//         $admin_name = $_SESSION['admin_id'];
-//         $message = "Your administrator, $admin_name, assigned you $temat_na_promotora topics.";
-//         $object->send_mail($message,$subject = 'Powiadomienie od administratora!',$message_body = '<p>Twoj promotor '.$admin_name.'  wysłał do ciebie wiadomość:</p>',$promotor_email,'kincelmateusz5@gmail.com');
-//     }
-
-//     $success = '<div class="alert alert-success">Assigned number of topics.</div>';
-
-//     $output = array(
-//         'error' => $error,
-//         'success' => $success
-//     );
-
-//     echo json_encode($output);
-// }
-
-
-		
+		echo json_encode($data);
+	}	
 
 
 
