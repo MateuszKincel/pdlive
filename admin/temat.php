@@ -134,6 +134,7 @@ include('header.php');
 							</div>
                         </div>
         		<div class="modal-footer">
+          			<input type="hidden" name="hidden_id" id="hidden_id" />
           			<input type="hidden" name="action" id="action" value="Przydziel" />
           			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Przydziel" />
           			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
@@ -254,7 +255,6 @@ $(document).ready(function(){
 			],
 			
 		});
-	});
 		
 	
 
@@ -399,12 +399,19 @@ $(document).on('click', '.view_button', function(){
 $('#przydzial_button').click(function(){
 		console.log("przydzialModal")
 		$('#przydzial_form')[0].reset();
+
 		$('#przydzial_form').parsley().reset();
+
     	$('#modal_title').text('Przydziel liczbę tematów');
+
     	$('#action').val('Przydziel');
+
     	$('#submit_button').val('Przydziel');
+
     	$('#przydzialModal').modal('show');
+
     	$('#form_message').html('');
+
 	});
     $('#przydzial_form').on('submit', function(event){
 		event.preventDefault();
@@ -425,24 +432,21 @@ $('#przydzial_button').click(function(){
 				},
 				success:function(data)
 				{
-					console.log('after success')
-					console.log(data)
 					updateTopicsTotal();
 					$('#submit_button').attr('disabled', false);
 					$('#submit_button').val('Przydziel');
 					if(data.error != '')
 					{
-						console.log('if error !=""')
 						$('#form_message').html(data.error);
 						$('#submit_button').val('Przydziel');
 					}
 					else
 					{
-						console.log('im here!')
 						$('#przydzialModal').modal('hide');
 						$('#message').html(data.success);
 						dataTable.ajax.reload();
 	
+
 						setTimeout(function(){
 							$('#message').html('');
 						}, 5000);
@@ -452,6 +456,7 @@ $('#przydzial_button').click(function(){
 		}
 	});
 
+	});
 
 </script>
 

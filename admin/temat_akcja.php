@@ -102,7 +102,6 @@ if(isset($_POST["action"]))
 		echo json_encode($output);
 
 	}
-}
 
 if($_POST["action"] == 'delete_temat')
 		{
@@ -273,6 +272,14 @@ if($_POST["action"] == 'Przydziel')
 			$admin_nazwa = $admin_data_row['admin_nazwa'];
 			$admin_email = $admin_data_row['admin_adres_email'];
 
+
+			// $object->query = 
+			// "SELECT admin_adres_email FROM admin";
+
+			// $admin_email = $object->get_result();
+			// $admin_email_row = $admin_email->fetch();
+			// $admin_email = $admin_email_row['admin_adres_email'];
+
 			$repplyTo = $admin_email;
 			foreach ($promotor_emails as $promotor_email) {
 				$promotor_adres_email = $promotor_email['promotor_adres_email'];
@@ -297,9 +304,7 @@ if($_POST["action"] == 'Przydziel')
 			} else {
 				echo '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
 			}
-		}			
-			
-	
+		}
 	
 
 
@@ -383,4 +388,6 @@ if($_SESSION['type'] == 'Promotor')
 
 		}
 	}
+
+}
 ?>
