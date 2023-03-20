@@ -425,11 +425,13 @@ $('#przydzial_button').click(function(){
 				},
 				success:function(data)
 				{
+					console.log('after success')
 					updateTopicsTotal();
 					$('#submit_button').attr('disabled', false);
 					$('#submit_button').val('Przydziel');
 					if(data.error != '')
 					{
+						console.log('if error !=""')
 						$('#form_message').html(data.error);
 						$('#submit_button').val('Przydziel');
 					}
