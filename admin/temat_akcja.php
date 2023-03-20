@@ -298,11 +298,11 @@ $output = array(
     'success'   =>  $success
     
 );
-
+	}
 echo json_encode($output);
 console.log($output);
-			}
-			}
+		
+	}			
 			
 	
 	
