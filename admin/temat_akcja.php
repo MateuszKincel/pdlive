@@ -134,7 +134,42 @@ if($_POST["action"] == 'fetch_single')
     echo json_encode($data);
 }
 
+
+if ($_POST["action"] == 'update_single') {
+    $promotor_id = $_POST["promotor_id"];
+    $new_temat_value = $_POST["new_temat_value"];
+
+    // Create database connection
+    $object = new CRUD();
+
+    // Update promotor table with new value
+    $object->query = "UPDATE promotor SET promotor_liczba_tematow = '$new_temat_value' WHERE promotor_id = '$promotor_id'";
+    $result = $object->execute_query();
+
+    if ($result) {
+        // Return success message
+        $data = array('status' => 'success', 'message' => 'Liczba tematów została zaktualizowana.');
+    } else {
+        // Return error message
+        $data = array('status' => 'error', 'message' => 'Błąd podczas aktualizacji liczby tematów.');
+    }
+
+    echo json_encode($data);
+}
+
 		
+if ($_POST["action"] == 'edit_single') {
+    $promotor_id = $_POST["promotor_id"];
+    $object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
+    $result = $object->get_result();
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
+    } else {
+        $data = array('promotor_liczba_tematow' => 'Błąd!');
+    }
+    echo json_encode($data);
+}
 
 
 
