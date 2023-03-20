@@ -216,6 +216,7 @@ if($_POST["action"] == 'Przydziel')
 {
 	if(isset($_POST["action"]) && $_POST["action"] === 'Przydziel') {
 	$success = '';
+	$error = '';
 	// Get number of topics and number of promotors
 	$liczba_tematow = intval($_POST["liczba_tematow"]);
 	$object->query = "SELECT * FROM promotor";
