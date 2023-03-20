@@ -425,7 +425,7 @@ $('#przydzial_button').click(function(){
 				},
 				success:function(data)
 				{
-					console.log('after success')
+					console.log('after successsssssssssssssssssssss')
 					updateTopicsTotal();
 					$('#submit_button').attr('disabled', false);
 					$('#submit_button').val('Przydziel');
