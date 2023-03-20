@@ -123,12 +123,11 @@ include('header.php');
         			<span id="form_message"></span>
 		          	<div class="form-group">
                                 <label>Liczba Tematów: <span class="text-danger"></span></label>
-                                <input type="number" name="liczba_tematow" id="liczba_tematow" class="form-control" required data-parsley-type="email" data-parsley-trigger="keyup" />
+                                <input type="number" name="liczba_tematow" id="liczba_tematow" class="form-control"/>
 							</div>							
         		<div class="modal-footer">
           			<input type="hidden" name="hidden_id" id="hidden_id" />
-          			<input type="hidden" name="action" id="action" value="Add" />
-          			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Dodaj" />
+          			<input type="hidden" name="action" id="action" value="update_single" />
           			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
         		</div>
       		</div>
@@ -343,7 +342,7 @@ $(document).on('click', '.edit_button', function() {
 
 
 // Add an event listener to save button
-$('#save_btn').off('click').on('click', function() {
+$('#submit_button').off('click').on('click', function() {
   // Get the new value of promotor_liczba_tematow from the input field
   var new_value = $('#temat_input').val();
   
