@@ -435,12 +435,12 @@ $('#przydzial_form').on('submit', function(event){
           console.log("przydzialModal ERROR");
           $("#form_message").html(data.error);
           $("#submit_button").val("Przydziel");
-		} else {
-           ($('#przydzialModal').is(':visible')) 
+        } else {
+          if ($('#przydzialModal').is(':visible')) { 
             console.log("Before hiding modal...");
-			$("#przydzialModal").modal("hide");
-			console.log("After hiding modal...");
-          
+            $("#przydzialModal").modal("hide");
+            console.log("After hiding modal...");
+          }
 
           $("#message").html(data.success);
           dataTable.ajax.reload();
@@ -453,6 +453,7 @@ $('#przydzial_form').on('submit', function(event){
     });
   }
 });
+
 
 
 </script>
