@@ -123,10 +123,12 @@ include('header.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                <button type="button" class="btn btn-primary" id="save_btn">Zapisz</button>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <?php if($_SESSION["type"] == "Admin" ) { ?>
