@@ -118,7 +118,7 @@ include('header.php');
                 <h4 class="modal-title" id="modal_title">Edycja Liczby Tematów</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body" id="temat_details">
+            <div class="modal-body" id="temat_liczba">
                 
             </div>
             <div class="modal-footer">
@@ -316,7 +316,7 @@ $(document).on('click', '.edit_button', function(){
             html += '</table></div>';
 
             $('#editModal').modal('show');
-            $('#temat_details').html(html);
+            $('#temat_liczba').html(html);
 
             // Add submit button and bind event handler
             var submitBtn = '<button type="button" class="btn btn-primary" id="submit_btn">Zapisz</button>';
