@@ -453,12 +453,6 @@ $('#przydzial_form').on('submit', function(event){
           }, 5000);
         }
       },
-      error: function(xhr, status, error) {
-        console.log("Error...");
-        console.log(xhr);
-        console.log(status);
-        console.log(error);
-      }
     });
   }
 });
