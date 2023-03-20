@@ -214,33 +214,40 @@ if($_POST["action"] == 'fetch_single')
 
 if($_POST["action"] == 'Przydziel')
 {
+	if(isset($_POST["action"]) && $_POST["action"] === 'Przydziel') {
 	$success = '';
-    // Get number of topics and number of promotors
-	$liczba_tematow = $_POST["liczba_tematow"];
+	// Get number of topics and number of promotors
+	$liczba_tematow = intval($_POST["liczba_tematow"]);
 	$object->query = "SELECT * FROM promotor";
 	$result = $object->get_result();
 	$liczba_promotorow = $result->rowCount();
 
 	// Divide the number of topics by the number of promotors
-	$temat_na_promotora = floor($liczba_tematow / $liczba_promotorow);
-	$remaining_topics = $liczba_tematow % $liczba_promotorow;
+$temat_na_promotora = floor($liczba_tematow / $liczba_promotorow);
+$remaining_topics = $liczba_tematow % $liczba_promotorow;
 
-	// Prepare the update query and bind the parameter for the topic count
-	$object->query = "UPDATE promotor SET promotor_liczba_tematow = :topics WHERE promotor_id = :id";
-	$object->statement = $object->connect->prepare($object->query);
-	$object->statement->bindParam(':topics', $temat_na_promotora);
+// Prepare the update query and bind the parameter for the topic count
+$object->query = "UPDATE promotor SET promotor_liczba_tematow = :topics WHERE promotor_id = :id";
+$object->statement = $object->connect->prepare($object->query);
+$object->statement->bindParam(':topics', $temat_na_promotora, PDO::PARAM_INT);
+$object->statement->bindParam(':id', $promotor_id, PDO::PARAM_INT);
 
-	// Loop through the result and update each row
-	foreach ($result as $row) {
-		$promotor_id = $row['promotor_id'];
-		if ($remaining_topics > 0) {
-			$object->statement->bindValue(':topics', $temat_na_promotora + 1);
-			$remaining_topics--;
-		} else {
-			$object->statement->bindValue(':topics', $temat_na_promotora);
-		}
-		$object->statement->bindValue(':id', $promotor_id);
-		$object->statement->execute();
+// Loop through the result and update each row
+foreach ($result as $row) {
+    $promotor_id = $row['promotor_id'];
+    if ($remaining_topics > 0) {
+        $object->statement->bindValue(':topics', $temat_na_promotora + 1, PDO::PARAM_INT);
+        $remaining_topics--;
+    } else {
+        $object->statement->bindValue(':topics', $temat_na_promotora, PDO::PARAM_INT);
+    }
+    $object->statement->execute();
+}
+
+$object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FROM promotor";
+$statement = $object->execute();
+$promotors = $object->statement_result();
+$success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
 	}
 
     $object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FROM promotor";
