@@ -211,11 +211,6 @@ $statement = $object->execute();
 $promotors = $object->statement_result();
 $success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
 	
-
-    $object->query = "SELECT promotor_id, promotor_nazwa, promotor_liczba_tematow FROM promotor";
-    $statement = $object->execute();
-	$promotors = $object->statement_result();
-	$success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div>';
 	
 			$object->query = "SELECT * FROM promotor";
 			$promotor_emails = $object->get_result();
@@ -230,6 +225,7 @@ $success = '<div class="alert alert-success">Przydzielono liczbę tematów.</div
 			$admin_nazwa = $admin_data_row['admin_nazwa'];
 			$admin_email = $admin_data_row['admin_adres_email'];
 			$repplyTo = $admin_email;
+			
 foreach ($promotor_emails as $promotor_email) {
     $promotor_adres_email = $promotor_email['promotor_adres_email'];
     $recipient = $promotor_adres_email;
