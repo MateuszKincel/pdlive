@@ -118,26 +118,27 @@ if($_POST["action"] == 'delete_temat')
 	}
 
 
-// if($_POST["action"] == 'fetch_single')
-// {
-//     $object->query = "SELECT * FROM temat WHERE promotor_id = '".$_POST["promotor_id"]."'";
+if($_POST["action"] == 'fetch_single')
+{
+    $object->query = "SELECT * FROM temat WHERE promotor_id = '".$_POST["promotor_id"]."'";
 
-//     $result = $object->get_result();
+    $result = $object->get_result();
 
-//     $data = array();
+    $data = array();
 
-//     foreach($result as $row)
-//     {
-//         array_push($data, $row);
-//     }
+    foreach($result as $row)
+    {
+        array_push($data, $row);
+    }
 
-//     echo json_encode($data);
-// }
+    echo json_encode($data);
+}
 
 		if ($_POST["action"] == 'edit_single') {
 			
 
-			$object->query = "SELECT * FROM temat WHERE promotor_id = '".$_POST["promotor_id"]."'";
+			$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
+
 
 			$result = $object->get_result();
 
