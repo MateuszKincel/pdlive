@@ -277,26 +277,26 @@ $(document).ready(function(){
 
 
 
-$(document).on('click', '.edit_button', function(){
-    var promotor_id = $(this).data('id');
+// $(document).on('click', '.edit_button', function(){
+//     var promotor_id = $(this).data('id');
 
-    $.ajax({
-        url:"temat_akcja.php",
-        method:"POST",
-        data:{promotor_id:promotor_id, action:'edit_single'},
-        dataType:'JSON',
-        success:function(data)
-        {
-            var html = '<div class="table-responsive">';
-            html += '<table class="table">';
-            html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
-            html += '</table></div>';
+//     $.ajax({
+//         url:"temat_akcja.php",
+//         method:"POST",
+//         data:{promotor_id:promotor_id, action:'edit_single'},
+//         dataType:'JSON',
+//         success:function(data)
+//         {
+//             var html = '<div class="table-responsive">';
+//             html += '<table class="table">';
+//             html += '<tr><th width="40%" class="text-right">Temat '+data.promotor_liczba_tematow+':</th><td width="60%"><input type="text" id="temat_input" value="'+data.promotor_liczba_tematow+'"></td></tr>';
+//             html += '</table></div>';
 
-            $('#editModal').modal('show');
-            $('#temat_details').html(html);
-        }
-    });
-});
+//             $('#editModal').modal('show');
+//             $('#temat_details').html(html);
+//         }
+//     });
+// });
 
 
 $(document).on('click', '.edit_button', function(){
@@ -338,9 +338,14 @@ function updateTematValue(promotor_id, newTematValue) {
         success: function(data) {
             // Handle success here
             $('#editModal').modal('hide');
+        },
+        error: function(xhr, status, error) {
+            // Handle errors here
+            console.log("Error: " + error);
         }
     });
 }
+
 
 
 
