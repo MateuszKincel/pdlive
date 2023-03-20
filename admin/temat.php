@@ -439,15 +439,16 @@ $('#przydzial_form').on('submit', function(event){
 
           $("#message").html(data.success);
           dataTable.ajax.reload();
+
+		  setTimeout(function() {
+            $("#message").html("");
+          }, 5000);
         } else {
           console.log("przydzialModal ERROR");
           $("#form_message").html(data.error);
           $("#submit_button").val("Przydziel");
         }
       }
-	  setTimeout(function() {
-            $("#message").html("");
-          }, 5000);
     });
   }
 });
