@@ -319,7 +319,7 @@ $(document).on('click', '.edit_button', function(){
             html += '<table class="table">';
 
 			for(var i = 0; i < data.length; i++) {
-				html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].promotor_liczba_tematow'</td></tr>' +;
+				html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].promotor_liczba_tematow'</td></tr>';
 			}
 
             html += '</table></div>';
