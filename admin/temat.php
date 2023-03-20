@@ -397,17 +397,16 @@ $(document).on('click', '.view_button', function(){
 
 
 $('#przydzial_button').click(function(){
-  console.log("przydzialModal");
-  $('#przydzial_form')[0].reset();
-  $('#przydzial_form').parsley().reset();
-  $('#modal_title').text('Przydziel liczbę tematów');
-  $('#action').val('Przydziel');
-  $('#submit_button').val('Przydziel');
-  $('#przydzialModal').modal('show');
-  $('#form_message').html('');
-});
-
-$('#przydzial_form').on('submit', function(event){
+		console.log("przydzialModal")
+		$('#przydzial_form')[0].reset();
+		$('#przydzial_form').parsley().reset();
+    	$('#modal_title').text('Przydziel liczbę tematów');
+    	$('#action').val('Przydziel');
+    	$('#submit_button').val('Przydziel');
+    	$('#przydzialModal').modal('show');
+    	$('#form_message').html('');
+	});
+    $('#przydzial_form').on('submit', function(event){
 		event.preventDefault();
 		if($('#przydzial_form').parsley().isValid())
 		{		
@@ -426,6 +425,7 @@ $('#przydzial_form').on('submit', function(event){
 				},
 				success:function(data)
 				{
+					updateTopicsTotal();
 					$('#submit_button').attr('disabled', false);
 					$('#submit_button').val('Przydziel');
 					if(data.error != '')
