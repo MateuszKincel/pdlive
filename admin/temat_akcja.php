@@ -134,26 +134,21 @@ if($_POST["action"] == 'fetch_single')
     echo json_encode($data);
 }
 
-		if($_POST["action"] == 'edit_single')
-	{
-		$promotor_id = $_POST["promotor_id"];
+		if ($_POST["action"] == 'edit_single') {
+    $promotor_id = $_POST["promotor_id"];
 
-		$object->query = "
-			SELECT * FROM promotor 
-			WHERE promotor_id = '$promotor_id'
-		";
+    $query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = '$promotor_id'";
+    $result = mysqli_query($conn, $query);
 
-		$result = $object->get_result();
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $data = array('promotor_liczba_tematow' => $row['promotor_liczba_tematow']);
+    } else {
+        $data = array('promotor_liczba_tematow' => null);
+    }
 
-		$data = array();
-
-		if ($result->num_rows == 1) {
-			$row = $result->fetch_assoc();
-			$data['promotor_liczba_tematow'] = $row['promotor_liczba_tematow'];
-		}
-
-		echo json_encode($data);
-	}	
+    echo json_encode($data);
+}
 
 	if ($_POST["action"] == 'update_single') {
     $promotor_id = $_POST["promotor_id"];
