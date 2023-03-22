@@ -5,8 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="description" content="">
 		<meta name="author" content="">
-		<title>System Rezerwacji i Prowadzenia Prac Dyplomowych</title>
-		<title>E-Praca</title>
+		<!-- <title>E-Praca</title>
+		<title>System Rezerwacji i Prowadzenia Prac DyplomowychE-Praca</title> -->
 
 	    <!-- Custom styles for this page -->
 	    <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -40,6 +40,7 @@
 		<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
 			<div class="col">
 		    	<h5 class="my-0 mr-md-auto font-weight-normal"><a href="index.php">E-Praca.pl</a></h5>
+				<title>System Rezerwacji i Prowadzenia Prac Dyplomowych - E-Praca</title>
 		    </div>
 		    <?php
 		    if(!isset($_SESSION['student_id']))
