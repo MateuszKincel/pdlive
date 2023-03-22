@@ -70,43 +70,53 @@ $recipients = $object->statement->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
-<div class="card">
-  <div class="card-header"><h4>Chat z promotorem</h4></div>
-  <div class="card-body">
-    <div id="chat-section" style="height: 300px; overflow-y: scroll; width: 100%;">
-      <!-- The messages will be inserted here by the AJAX request -->
-      <?php foreach ($messages as $message): ?>
-    <?php if ($message['sender_name'] == $student_name): ?>
-      <!-- If the sender's name is the student's name, add the "sender" class to the message div -->
-      <div style="background-color: #333;" class="message sender"><?php echo $message['message']; ?></div>
-    <?php else: ?>
-      <!-- If the sender's name is not the student's name, do not add the "sender" class to the message div -->
-      <div class="message"><?php echo $message['message']; ?></div>
-    <?php endif; ?>
-  <?php endforeach; ?>
-    </div>
-    <form method="post" action="get_messages.php" id="chat-form" data-recipient-id="<?php echo $recipient_id; ?>">
-      <label for="recipient">Wybierz promotora:</label><br>
-      <select  name="recipient_id" id="recipient">
-        <option value="0">Wybierz Promotora</option>
-        <?php foreach ($recipients as $recipient): ?>
-          <option value="<?php echo $recipient['promotor_id']; ?>"><?php echo $recipient['promotor_nazwa']; ?></option>
+
+<div class="container-fluid">
+  <?php include('navbar.php'); ?>
+  <br />
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header"><h4>Chat z promotorem</h4></div>
+        <div class="card-body">
+          <div id="chat-section" style="height: 300px; overflow-y: scroll; width: 100%;">
+            <!-- The messages will be inserted here by the AJAX request -->
+            <?php foreach ($messages as $message): ?>
+          <?php if ($message['sender_name'] == $student_name): ?>
+            <!-- If the sender's name is the student's name, add the "sender" class to the message div -->
+            <div style="background-color: #333;" class="message sender"><?php echo $message['message']; ?></div>
+          <?php else: ?>
+            <!-- If the sender's name is not the student's name, do not add the "sender" class to the message div -->
+            <div class="message"><?php echo $message['message']; ?></div>
+          <?php endif; ?>
         <?php endforeach; ?>
-        </select>
-        <br>
-        <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
-        <label for="message">Wpisz wiadomość:</label><br>
-        <div>
-          <input class="form-control" name="message" id="message" style="width: 80%; height: 30px; margin-bottom: 10px;" placeholder="Wpisz wiadomość...">
-          <br>
-          <input type="file" name="file" id="file-input">
-          <br>
-          <button type="submit" name="submit" id="send-btn" class="btn btn-primary">Wyślij</button>
+          </div>
+          <form method="post" action="get_messages.php" id="chat-form" data-recipient-id="<?php echo $recipient_id; ?>">
+            <label for="recipient">Wybierz promotora:</label><br>
+            <select  name="recipient_id" id="recipient">
+              <option value="0">Wybierz Promotora</option>
+              <?php foreach ($recipients as $recipient): ?>
+                <option value="<?php echo $recipient['promotor_id']; ?>"><?php echo $recipient['promotor_nazwa']; ?></option>
+              <?php endforeach; ?>
+              </select>
+              <br>
+              <input type="hidden" name="student_id" value="<?php echo $student_id; ?>">
+              <label for="message">Wpisz wiadomość:</label><br>
+              <div>
+                <input class="form-control" name="message" id="message" style="width: 80%; height: 30px; margin-bottom: 10px;" placeholder="Wpisz wiadomość...">
+                <br>
+                <input type="file" name="file" id="file-input">
+                <br>
+                <button type="submit" name="submit" id="send-btn" class="btn btn-primary">Wyślij</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+     
+
 
 
 <script>

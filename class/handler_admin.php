@@ -13,7 +13,7 @@ require '../includes/Exception.php';
 class Handler
 {
 	public $base_url = 'https://epraca.site';
-	public $admin_url = 'https://epraca.site/admin/panel_admin.php';
+	public $admin_url = 'https://epraca.site/admin/index.php';
 	public $connect;
 	public $query;
 	public $statement;
