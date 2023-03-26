@@ -20,6 +20,7 @@
 	    <!-- Page level plugins -->
 	    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
 	    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<script src="https://cdn.datatables.net/plug-ins/1.11.4/i18n/Polish.json"></script>
 
 	</body>
 </html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php 
 function getStudentName($object, $student_id) {
     $data = array(
@@ -23,6 +24,8 @@ function getStudentName($object, $student_id) {
 
 ?>
 
+=======
+>>>>>>> 4e1a8393c0e1d565459a54a2d57be4d485bc40d6
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -47,7 +50,11 @@ function getStudentName($object, $student_id) {
     </ul>
     <ul class="navbar-nav">
       <li class="nav-item d-flex align-items-center mr-2">
+<<<<<<< HEAD
 		    <a class="navbar-brand ml-2" href="#"><?php echo getStudentName($object, $_SESSION['student_id']); ?></a>
+=======
+		<a class="navbar-brand ml-2" href="#"><?php echo $_SESSION['student_name']; ?></a>
+>>>>>>> 4e1a8393c0e1d565459a54a2d57be4d485bc40d6
         <a class="nav-link btn btn-outline-primary text-white" href="profil.php"><i class="fas fa-user-edit mr-2"></i>Profil</a>
       </li>
       <li class="nav-item mr-2">
