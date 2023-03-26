@@ -26,6 +26,15 @@ class Handler
 		date_default_timezone_set('Europe/Warsaw');
 
 		session_name("admin_session");
+
+		// Set session timeout to 1 hour (3600 seconds)
+		session_set_cookie_params([
+			'lifetime' => 3600,
+			'path' => '/',
+			'secure' => false, // Set this to true if using HTTPS
+			'httponly' => true,
+		]);
+
 		session_start();
 
 		$this->now = date("Y-m-d H:i:s",  STRTOTIME(date('h:i:sa')));

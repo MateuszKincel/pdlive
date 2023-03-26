@@ -1,3 +1,28 @@
+<?php 
+function getStudentName($object, $student_id) {
+    $data = array(
+        ':student_id' => $student_id
+    );
+
+    $object->query = "
+    SELECT student_imie, student_nazwisko, student_nr_indeksu FROM student 
+    WHERE student_id = :student_id
+    ";
+
+    $object->execute($data);
+
+    if ($object->row_count() > 0) {
+        $result = $object->statement_result();
+        foreach ($result as $row) {
+            return $row['student_imie'] . ' ' . $row['student_nazwisko'] . ' ' . $row['student_nr_indeksu'];
+        }
+    } else {
+        return '';
+    }
+}
+
+?>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -22,7 +47,7 @@
     </ul>
     <ul class="navbar-nav">
       <li class="nav-item d-flex align-items-center mr-2">
-		<a class="navbar-brand ml-2" href="#"><?php echo $_SESSION['student_name']; ?></a>
+		    <a class="navbar-brand ml-2" href="#"><?php echo getStudentName($object, $_SESSION['student_id']); ?></a>
         <a class="nav-link btn btn-outline-primary text-white" href="profil.php"><i class="fas fa-user-edit mr-2"></i>Profil</a>
       </li>
       <li class="nav-item mr-2">

@@ -180,6 +180,29 @@ if(isset($_POST["action"]))
 
 	}
 
+	function getStudentName($object, $student_id) {
+    $data = array(
+        ':student_id' => $student_id
+    );
+
+    $object->query = "
+    SELECT student_imie, student_nazwisko, student_nr_indeksu FROM student 
+    WHERE student_id = :student_id
+    ";
+
+    $object->execute($data);
+
+    if ($object->row_count() > 0) {
+        $result = $object->statement_result();
+        foreach ($result as $row) {
+            return $row['student_imie'] . ' ' . $row['student_nazwisko'] . ' ' . $row['student_nr_indeksu'];
+        }
+    } else {
+        return '';
+    }
+}
+
+
 	if($_POST['action'] == 'fetch_schedule')
 	{
 		$output = array();
@@ -281,6 +304,8 @@ if(isset($_POST["action"]))
 			':student_haslo'			=>	$_POST["student_haslo"],
 			':student_imie'				=>	$_POST["student_imie"],
 			':student_nazwisko'			=>	$_POST["student_nazwisko"],
+			':student_gr_dziek'			=>	$_POST["student_gr_dziek"],
+			':student_podgrupa'			=>	$_POST["student_podgrupa"],
 			':student_data_urodzenia'	=>	$_POST["student_data_urodzenia"],
 			':student_nr_indeksu'		=>	$_POST["student_nr_indeksu"],
 			':student_adres'			=>	$_POST["student_adres"],
@@ -294,6 +319,8 @@ if(isset($_POST["action"]))
 		student_imie = :student_imie, 
 		student_adres_email = :student_adres_email, 
 		student_nazwisko = :student_nazwisko, 
+		student_gr_dziek = :student_gr_dziek,
+		student_podgrupa = :student_podgrupa, 
 		student_data_urodzenia = :student_data_urodzenia, 
 		student_nr_indeksu = :student_nr_indeksu, 
 		student_adres = :student_adres, 

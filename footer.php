@@ -20,8 +20,33 @@
 	    <!-- Page level plugins -->
 	    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
 	    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-		<script src="https://cdn.datatables.net/plug-ins/1.11.4/i18n/Polish.json"></script>
 
 	</body>
 </html>
 
+<!-- header.php -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Other head elements like title, meta tags, stylesheets, etc. -->
+</head>
+<body>
+    <!-- Your website's header content -->
+
+    <script>
+        let timeout; // Timeout variable to store the setTimeout function
+
+        function resetTimeout() {
+            clearTimeout(timeout); // Clear previous timeout if any
+            // Set the timeout to 1 hour (3600000 milliseconds)
+            timeout = setTimeout(() => window.location.href = "/logout.php", 3600000);
+        }
+
+        // Reset the timeout on any user action (mousemove, keydown, or touchstart)
+        window.addEventListener('mousemove', resetTimeout);
+        window.addEventListener('keydown', resetTimeout);
+        window.addEventListener('touchstart', resetTimeout);
+
+        // Initialize the timeout when the script is loaded
+        resetTimeout();
+    </script>

@@ -90,12 +90,6 @@ include('header.php');
               <input type="text" name="student_gr_dziek" id="student_gr_dziek" class="form-control" required data-parsley-trigger="keyup" />
 			 </div>
 		    </div>
-		   <div class="form-group row">
-            <label for="student_gr_dziek" class="col-md-3 col-form-label">Grupa<span class="text-danger">*</span></label>
-            <div class="col-md-8">
-              <input type="text" name="student_gr_dziek" id="student_gr_dziek" class="form-control" required data-parsley-trigger="keyup" />
-			</div>
-		   </div>
 		  <div class="form-group row">
 			<label for="student_podgrupa" class="col-md-3 col-form-label">Podgrupa<span class="text-danger">*</span></label>
 			<div class="col-md-8">
