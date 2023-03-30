@@ -114,9 +114,8 @@ include('footer.php');
 
 <script>
 
-const pattern = /^\d{2}\s*[A-Z]{3}-[A-Z]{3}-[A-Z]{2}$/
-const pattern2 = /^\d{2}\s*[A-Z]{3}-[A-Z]{2}$/
-
+const pattern = /^\d{2}\s*[A-Z]{3}-[A-Z]{3}-[A-Z]{2}$/;
+const pattern2 = /^\d{2}\s*[A-Z]{3}-[A-Z]{2}$/;
 
 // function to register the student form
 $(document).ready(function(){
@@ -130,47 +129,52 @@ $(document).ready(function(){
 	$('#student_register_form').parsley();
 
 	$('#student_register_form').on('submit', function(event){
-	event.preventDefault()
-	checkStudentGrDziek(event, this);
+		event.preventDefault();
+		checkStudentGrDziek(event, this);
+	});
 });
-  });
+
 function checkStudentGrDziek(event, form) {
-  const student_gr_dziek_value = $("#student_gr_dziek").val();
-  if(!pattern.test(student_gr_dziek_value) && !pattern2.test(student_gr_dziek_value)){
-    //show error message
-    $("#error-message").show();
-    $("#error-message").text("To pole wymaga specjalnego formatu np. '41 INF-ISM-NP' lub '11 INF-NP'");
-    event.preventDefault();
-	return false;
-  } else {
-    $("#error-message").hide();
-    //form validation passed
-	 if($(form).parsley().isValid())
-	{
-		$.ajax({
-			url:"akcja.php",
-			method:"POST",
-			data:$(form).serialize(),
-			dataType:'json',
-			beforeSend:function(){
-				$('#student_register_button').attr('disabled', 'disabled');
-			},
-			success:function(data)
-			{
-				$('#student_register_button').attr('disabled', false);
-				if(data.error !== '')
-				{
-					$('#message').html(data.error);
+	console.log("Checking student_gr_dziek_value");
+	const student_gr_dziek_value = $("#student_gr_dziek").val();
+	if(!pattern.test(student_gr_dziek_value) && !pattern2.test(student_gr_dziek_value)){
+		//show error message
+		console.log("Invalid student_gr_dziek_value, showing error message");
+		$("#error-message").show();
+		$("#error-message").text("To pole wymaga specjalnego formatu np. '41 INF-ISM-NP' lub '11 INF-NP'");
+		event.preventDefault();
+		return false;
+	} else {
+		console.log("Valid student_gr_dziek_value, hiding error message");
+		$("#error-message").hide();
+		//form validation passed
+		if($(form).parsley().isValid()) {
+			console.log("Form validation passed, sending AJAX request");
+			$.ajax({
+				url:"akcja.php",
+				method:"POST",
+				data:$(form).serialize(),
+				dataType:'json',
+				beforeSend:function(){
+					$('#student_register_button').attr('disabled', 'disabled');
+				},
+				success:function(data) {
+					console.log("Received AJAX response");
+					$('#student_register_button').attr('disabled', false);
+					if(data.error !== '') {
+						console.log("AJAX response contained an error, showing error message");
+						$('#message').html(data.error);
+					}
+					if(data.success != '') {
+						console.log("AJAX response contained a success message, showing success message");
+						$('#message').html(data.success);
+						$error = '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
+					}
 				}
-				if(data.success != '')
-				{
-					$('#message').html(data.success);
-					$error = '<div class="alert alert-danger">Coś poszło nie tak :(</div>';
-				}
-			}
-		});
+			});
+		}
 	}
-  }
 }
+
 
 </script>
