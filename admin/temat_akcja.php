@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 //temat_akcja.php
 
 include('../class/handler_admin.php');
@@ -71,7 +72,8 @@ if(isset($_POST["action"]))
 			$sub_array[] = $row["promotor_nazwa"];
 			$sub_array[] = $row["promotor_liczba_tematow"];
 			$sub_array[] = '<button type="button"   name="view_button" class="btn btn-info btn-circle view_button" data-id="'.$row["promotor_id"].'" title="Podgląd tematów"><i class="fa-sharp fa-solid fa-eye"></i></button> 
-							<button type="button"   name="edit_button" class="btn btn-warning btn-circle edit_button" data-id="'.$row["promotor_id"].'" title="Edytuj liczbę tematów."><i class="fa-sharp fa-solid fa-cog"></i></button>';
+							<button type="button"   name="edit_button" class="btn btn-warning btn-circle edit_button" data-id="'.$row["promotor_id"].'" title="Edytuj liczbę tematów."><i class="fa-sharp fa-solid fa-cog"></i></button> 
+							<button type="button"   name="add_topic_button" class="btn btn-success btn-circle add_topic_button" data-id="'.$row["promotor_id"].'" title="Dodaj tematy."><i class="fa-sharp fa-solid fa-plus"></i></button>';
 		} else if ($_SESSION["type"] == "Promotor") {
 			$sub_array[] = $row["temat_grupa"];
 			$sub_array[] = $row["temat"];
@@ -156,9 +158,8 @@ if($_POST["action"] == 'edit_single')
 }
 
 if($_POST["action"] == 'update_single')
-
 {
-	$output = array();
+    $output = array();
     $query = "
     UPDATE promotor SET
     promotor_liczba_tematow = '".$_POST["promotor_liczba_tematow"]."'
@@ -173,11 +174,13 @@ if($_POST["action"] == 'update_single')
     }
     else
     {
-        $output['error'] = "Nie udało się zaktualizować liczby tematów.";
+        $output['error'] = "Nie udało się zaktualizować liczby tematów. Error message: ";
     }
 
     echo json_encode($output);
 }
+
+
 
 
 if($_POST["action"] == 'Przydziel')
@@ -268,25 +271,54 @@ echo json_encode($output);
 	}			
 			
 }	
-	
+		
+if ($_SESSION["type"] == "Admin" && $_POST["action"] == 'Add_admin') {
+    $error = '';
+    $success = '';
+
+    $data = array(
+        ':temat' => $object->clean_input($_POST["temat"]),
+        ':temat_dostepny' => 'Tak',
+        ':cel_zakres' => $object->clean_input($_POST["cel_zakres"]),
+        ':temat_semestr' => $object->clean_input($_POST["temat_semestr"]),
+        ':temat_grupa' => $object->clean_input($_POST["temat_grupa"]),
+        ':promotor_id' => $object->clean_input($_POST["promotor_id"]),
+    );
+
+    $object->query = "SELECT COUNT(*) as temat_count FROM temat WHERE promotor_id = :promotor_id";
+	$object->execute(array(':promotor_id' => $_POST['promotor_id']));
+	$row = $object->fetch();
+	$temat_count = $row['temat_count'];
+
+	$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = :promotor_id";
+	$object->execute(array(':promotor_id' => $_POST['promotor_id']));
+	$row = $object->fetch();
+	$promotor_temat_limit = $row['promotor_liczba_tematow'];
+
+    if ($temat_count >= $promotor_temat_limit) {
+        $error = '<div class="alert alert-danger">Dodałeś już wszystkie tematy!</div>';
+    } else {
+        $object->query = "INSERT INTO temat (temat_grupa,promotor_id, temat, temat_semestr,cel_zakres, temat_dostepny) VALUES (:temat_grupa, :promotor_id, :temat, :temat_semestr,:cel_zakres, :temat_dostepny)";
+        $object->execute($data);
+
+        $success = '<div class="alert alert-success">Temat Dodany</div>';
+    }
+
+    $output = array(
+        'error' => $error,
+        'success' => $success
+    );
+
+    echo json_encode($output);
+}
 
 
-
-
-if($_SESSION['type'] == 'Promotor')
-		{
-			
 		
 	if($_POST["action"] == 'Add')
-
-
 		
 	{
-		
 		$error = '';
-
 		$success = '';
-
 		$data = array(
 			':temat'						=>	$object->clean_input($_POST["temat"]),
 		);
@@ -302,9 +334,6 @@ if($_SESSION['type'] == 'Promotor')
 		{
 			$error = '<div class="alert alert-danger">Temat już istnieje!</div>';
 		}
-		
-		
-		
 
 			if($error == '')
 			{
@@ -325,6 +354,12 @@ if($_SESSION['type'] == 'Promotor')
 				$object->execute(array(':promotor_id' => $_POST['hidden_id']));
 				$promotor_temat_limit = $object->fetch()['promotor_liczba_tematow'];
 
+				$row = $object->fetch();
+				if ($row !== false) {
+					$temat_count = $row['temat_count'];
+					$promotor_temat_limit = $row['promotor_liczba_tematow'];
+				}
+
 				if($temat_count >= $promotor_temat_limit) {
 					$error = '<div class="alert alert-danger">Dodałeś już wszystkie tematy!</div>';
 				} else {
@@ -341,7 +376,6 @@ if($_SESSION['type'] == 'Promotor')
 				$success = '<div class="alert alert-success">Temat Dodany</div>';
 				}
 			}
-
 		$output = array(
 			'error'		=>	$error,
 			'success'	=>	$success
@@ -350,5 +384,4 @@ if($_SESSION['type'] == 'Promotor')
 		echo json_encode($output);
 
 		}
-	}
 ?>

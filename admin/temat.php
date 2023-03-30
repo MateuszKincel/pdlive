@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 //tematy_admin.php
 
 include('../class/handler_admin.php');
@@ -50,17 +51,14 @@ include('header.php');
                             	</div>
 								<?php } ?>
                             	<div class="col" align="right">
-									<?php
-									if($_SESSION["type"] == "Admin") {?>
-									<label style="padding-right: 10px">Przydziel liczbę tematów:  </label>
-									<button type="button" name="przydzial_button" id="przydzial_button" class="btn btn-danger btn-square "><i class="fas fa-plus"></i></button>
-
-									<?php } else if ($_SESSION["type"] == "Promotor") { 
-									?>
-									<label style="padding-right: 10px">Dodaj temat:  </label>
-									<button type="button" name="add_temat" id="add_temat" class="btn btn-success btn-square btn-lg"><i class="fas fa-plus"></i></button>
-									<?php } ?>
-								</div>
+									<?php if($_SESSION["type"] == "Admin") { ?>
+										<label style="padding-right: 10px;">Przydziel liczbę tematów:</label>
+										<button type="button" name="przydzial_button" id="przydzial_button" class="btn btn-danger btn-sm mr-2"><i class="fas fa-plus"></i></button>
+									<?php } ?> <?php if($_SESSION["type"] == "Promotor") { ?>
+									<label style="padding-right: 10px;">Dodaj temat:</label>
+									<button type="button" name="add_temat" id="add_temat" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
+									<?php } ?>									
+								</div> 
                             </div>
                         </div>
                         <div class="card-body">
@@ -93,7 +91,7 @@ include('header.php');
                 ?>
 
 
-
+<?php if($_SESSION["type"] == "Admin" ) { ?>
 <div id="viewModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -110,7 +108,7 @@ include('header.php');
         </div>
     </div>
 </div>
-
+<?php } ?>
 
 <?php if($_SESSION["type"] == "Admin" ) { ?>
 <div id="przydzialModal" class="modal fade">
@@ -133,6 +131,8 @@ include('header.php');
 								<input type="number" name="liczba_tematow" id="liczba_tematow" class="form-control" />
 							</div>
                         </div>
+					</div>
+        		</div>
         		<div class="modal-footer">
           			<input type="hidden" name="hidden_id" id="hidden_id" />
           			<input type="hidden" name="action" id="action" value="Przydziel" />
@@ -145,8 +145,14 @@ include('header.php');
 </div>
 <?php } ?>
 
-<?php if($_SESSION["type"] == "Promotor" ) {  ?>
-<div id="tematModal" class="modal fade">
+
+
+
+
+
+
+<?php if($_SESSION["type"] == "Admin" ) { ?>
+<div id="adminTematModal" class="modal fade">
   	<div class="modal-dialog">
     	<form method="post" id="temat_form">
       		<div class="modal-content">
@@ -179,17 +185,50 @@ include('header.php');
                             </div>
                         </div>
         		<div class="modal-footer">
-          			<input type="hidden" name="hidden_id" id="hidden_id" value="<?= $_SESSION['admin_id'] ?>"/>
-          			<input type="hidden" name="action" id="action" value="Add" />
-          			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Dodaj" />
-          			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+          			<input type="hidden" name="promotor_id" id="promotor_id" value="" />
+					<input type="hidden" name="action" id="action" value="Add_admin" />
+					<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Zapisz" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
         		</div>
       		</div>
-    	</form>
-  	</div>
+  		</div>
+	</form>
+</div>
+</div>
 </div>
 <?php } ?>
 
+<?php if($_SESSION["type"] == "Admin" ) { ?>
+<div id="editModal" class="modal fade">
+  <div class="modal-dialog">
+    <form method="post" id="edit_form">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal_title">Edytuj Liczbę Tematów</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <span id="form_message"></span>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-12">
+                <label>Liczba tematów <span class="text-danger">*</span></label>
+                <input type="number" name="promotor_liczba_tematow" id="promotor_liczba_tematow" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="hidden" name="promotor_id" id="promotor_id" value="" />
+          <input type="hidden" name="action" id="action" value="update_single" />
+          <input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Zapisz" />
+          <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<?php } ?>
 
 <script>
 
@@ -213,11 +252,6 @@ function updateModalSummary() {
     		} else {
         		console.log("error");
     		}
-		},
-		error: function(xhr, status, error){
-		console.log(xhr);
-		console.log(status);
-		console.log(error);
 		}
 	});
 }
@@ -255,10 +289,6 @@ $(document).ready(function(){
 			],
 			
 		});
-		
-	
-
-
 
 $(document).on('click', '.view_button', function(){
     var promotor_id = $(this).data('id');
@@ -380,6 +410,7 @@ $(document).on('click', '.view_button', function(){
 					else
 					{
 						$('#tematModal').modal('hide');
+						$('#adminTematModal').modal('hide');
 						$('#message').html(data.success);
 						dataTable.ajax.reload();
 
@@ -393,6 +424,79 @@ $(document).on('click', '.view_button', function(){
 			})
 		}
 	});
+
+
+	// When the add_topic_button is clicked
+$(document).on('click', '.add_topic_button', function(){
+	// Get the promotor_id value from the button
+	var promotor_id = $(this).data('id');
+	
+	// Set the value of the hidden promotor_id input
+	$('#promotor_id').val(promotor_id);
+	
+	// Reset the form and display the modal
+	$('#temat_form')[0].reset();
+	$('#temat_form').parsley().reset();
+	$('#modal_title').text('Dodaj tematy');
+	$('#submit_button').val('Zapisz');
+	$('#adminTematModal').modal('show');
+	$('#form_message').html('');
+});
+
+
+
+	
+
+
+$(document).on('click', '.edit_button', function(){
+    var promotor_id = $(this).data("id");
+    $('#form_message').html('');
+    $.ajax({
+        url:"temat_akcja.php",
+        method:"POST",
+        data:{promotor_id:promotor_id, action:'edit_single'},
+        dataType:"json",
+        success:function(data)
+        {
+            $('#editModal').modal('show');
+            $('#promotor_liczba_tematow').val(data.promotor_liczba_tematow);
+            $('#promotor_id').val(promotor_id); // Set the value of the hidden input field
+            $('#modal_title').text('Edytuj Liczbę Tematów');
+            $('#action').val('update_single');
+            $('#submit_button').val('Zapisz');
+        }
+    })
+});
+
+
+$(document).on('submit', '#edit_form', function(event){
+    event.preventDefault();
+
+    $.ajax({
+        url:"temat_akcja.php",
+        method:"POST",
+        data:$(this).serialize(),
+        dataType:"json",
+        success:function(data)
+        {
+            if(data.success)
+            {
+                $('#editModal').modal('hide');
+                $('#form_message').html('<div class="alert alert-success">Liczba tematów została zaktualizowana.</div>');
+                setTimeout(function(){
+                    $('#form_message').html('');
+                }, 5000);
+                
+                // Reload the datatable
+                $('#dataTable').DataTable().ajax.reload();
+            }
+            else
+            {
+                $('#form_message').html('<div class="alert alert-danger">'+data.error+'</div>');
+            }
+        }
+    })
+});
 
 
 
@@ -456,7 +560,10 @@ $('#przydzial_button').click(function(){
 		}
 	});
 
-	});
+
+
+
+});
 
 </script>
 
