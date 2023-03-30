@@ -8,7 +8,6 @@ $object = new Handler;
 
 
 
-
 if(!$object->is_login())
 {
     header("location:".$object->base_url."admin");
@@ -112,32 +111,6 @@ include('header.php');
     </div>
 </div>
 
-<div id="liczbaTematowModal" class="modal fade">
-  	<div class="modal-dialog">
-    	<form method="post" id="liczba_form">
-      		<div class="modal-content">
-        		<div class="modal-header">
-          			<h4 class="modal-title" id="modal_title">Edytuj liczbę tematów</h4>
-          			<button type="button" class="close" data-dismiss="modal">&times;</button>
-        		</div>
-        		<div class="modal-body">
-        			<span id="form_message"></span>
-		          	<div class="form-group">
-                                <label>Liczba Tematów: <span class="text-danger"></span></label>
-                                <input type="number" name="liczba_tematow" id="liczba_tematow" class="form-control"/>
-							</div>							
-        		<div class="modal-footer">
-          			<input type="hidden" name="hidden_id" id="hidden_id" />
-          			<input type="hidden" name="action" id="action" value="update_single" />
-					<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Edytuj" />
-          			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-        		</div>
-      		</div>
-    	</form>
-  	</div>
-</div>
-
-
 
 <?php if($_SESSION["type"] == "Admin" ) { ?>
 <div id="przydzialModal" class="modal fade">
@@ -161,6 +134,7 @@ include('header.php');
 							</div>
                         </div>
         		<div class="modal-footer">
+          			<input type="hidden" name="hidden_id" id="hidden_id" />
           			<input type="hidden" name="action" id="action" value="Przydziel" />
           			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Przydziel" />
           			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
@@ -281,7 +255,6 @@ $(document).ready(function(){
 			],
 			
 		});
-	
 		
 	
 
@@ -301,8 +274,10 @@ $(document).on('click', '.view_button', function(){
             html += '<table class="table">';
 
 			for(var i = 0; i < data.length; i++) {
-
-				html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td></tr>' + '<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
+				// html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td></tr>';
+				// html += '<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
+				html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td></tr>' +
+				'<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
 			}
 
             html += '</table></div>';
@@ -312,62 +287,6 @@ $(document).on('click', '.view_button', function(){
             $('#temat_details').html(html);
         }
     })
-});
-
-$(document).on('click', '.edit_button', function() {
-  var promotor_id = $(this).data('id');
-  
-  // Send an AJAX request to fetch promotor_liczba_tematow value by promotor_id
-  $.ajax({
-    url: "temat_akcja.php",
-    method: "POST",
-    data: {promotor_id: promotor_id, action: 'edit_single'},
-    dataType: "JSON",
-    success: function(data) {
-      // Display the fetched promotor_liczba_tematow value in the modal
-      $('#liczba_tematow').val(data.promotor_liczba_tematow);
-      $('#promotor_adres_email').val(data.promotor_adres_email);
-      $('#hidden_id').val(promotor_id);
-      $('#modal_title').text('Edytuj liczbę tematów');
-      
-      // Show the liczbaTematowModal
-      $('#liczbaTematowModal').modal('show');
-    },
-    error: function(xhr, status, error) {
-      // Display an error message
-      console.log("Error: " + error);
-    }
-  });
-});
-
-
-// Add an event listener to form submit
-$('#liczba_form').submit(function(event) {
-  event.preventDefault(); // Prevent default form submission
-  
-  // Get the new value of promotor_liczba_tematow from the input field
-  var new_value = $('#liczba_tematow').val();
-  var promotor_id = $('#hidden_id').val();
-  
-  // Send an AJAX request to update the promotor_liczba_tematow value in the database
-  $.ajax({
-    url: "temat_akcja.php",
-    method: "POST",
-    data: {promotor_id: promotor_id, promotor_liczba_tematow: new_value, action: 'update_single'},
-    dataType: "JSON",
-    success: function(response) {
-      // Close the liczbaTematowModal
-      $('#liczbaTematowModal').modal('hide');
-      
-      // Reload the datatable
-      dataTable.ajax.reload();
-	  updateTopicsTotal();
-    },
-    error: function(xhr, status, error) {
-      // Display an error message
-      console.log("Error: " + error);
-    }
-  });
 });
 
 
@@ -432,7 +351,6 @@ $('#liczba_form').submit(function(event) {
 
 
 	});
-	
     $('#temat_form').on('submit', function(event){
 		event.preventDefault();
 		if($('#temat_form').parsley().isValid())
@@ -479,62 +397,67 @@ $('#liczba_form').submit(function(event) {
 
 
 $('#przydzial_button').click(function(){
-  console.log("przydzialModal");
-  $('#przydzial_form')[0].reset();
-  $('#przydzial_form').parsley().reset();
-  $('#modal_title').text('Przydziel liczbę tematów');
-  $('#action').val('Przydziel');
-  $('#submit_button').val('Przydziel');
-  $('#przydzialModal').modal('show');
-  $('#form_message').html('');
-});
+		console.log("przydzialModal")
+		$('#przydzial_form')[0].reset();
 
-$('#przydzial_form').on('submit', function(event){
-  event.preventDefault();
-  console.log("Submitting form...");
+		$('#przydzial_form').parsley().reset();
 
-  if($('#przydzial_form').parsley().isValid()) {
-    $.ajax({
-      url: "temat_akcja.php",
-      method: "POST",
-      data: new FormData(this),
-      dataType: "json",
-      contentType: false,
-      cache: false,
-      processData: false,
-      beforeSend: function() {
-        console.log("Before send...");
-        $("#submit_button").attr("disabled", "disabled");
-        $("#submit_button").val("czekaj...");
-      },
-      success: function(data) {
-        console.log("Success...");
-        console.log(data);
-        $("#submit_button").prop("disabled", false);
-        $("#submit_button").val("Przydziel");
+    	$('#modal_title').text('Przydziel liczbę tematów');
 
-        if(data.success) {
-          console.log("Before hiding modal...");
-          $("#przydzialModal").modal("hide");
-          console.log("After hiding modal...");
+    	$('#action').val('Przydziel');
 
-          $("#message").html(data.success);
-          dataTable.ajax.reload();
+    	$('#submit_button').val('Przydziel');
 
-		  setTimeout(function() {
-            $("#message").html("");
-          }, 5000);
-        } else {
-          console.log("przydzialModal ERROR");
-          $("#form_message").html(data.error);
-          $("#submit_button").val("Przydziel");
-        }
-      }
-    });
-  }
-});
+    	$('#przydzialModal').modal('show');
 
-}); // datatable end bracket
+    	$('#form_message').html('');
+
+	});
+    $('#przydzial_form').on('submit', function(event){
+		event.preventDefault();
+		if($('#przydzial_form').parsley().isValid())
+		{		
+			$.ajax({
+				url:"temat_akcja.php",
+				method:"POST",
+				data: new FormData(this),
+				dataType:'json',
+                contentType: false,
+                cache: false,
+                processData:false,
+				beforeSend:function()
+				{
+					$('#submit_button').attr('disabled', 'disabled');
+					$('#submit_button').val('czekaj...');
+				},
+				success:function(data)
+				{
+					updateTopicsTotal();
+					$('#submit_button').attr('disabled', false);
+					$('#submit_button').val('Przydziel');
+					if(data.error != '')
+					{
+						$('#form_message').html(data.error);
+						$('#submit_button').val('Przydziel');
+					}
+					else
+					{
+						$('#przydzialModal').modal('hide');
+						$('#message').html(data.success);
+						dataTable.ajax.reload();
+	
+
+						setTimeout(function(){
+							$('#message').html('');
+						}, 5000);
+					}
+				}
+			})
+		}
+	});
+
+	});
+
 </script>
 
 

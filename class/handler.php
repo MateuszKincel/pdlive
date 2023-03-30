@@ -4,7 +4,7 @@
 
 class Handler
 {
-	public $base_url = 'https://epraca.site/';
+	public $base_url = 'https://epraca.site/index.php';
 	public $connect;
 	public $query;
 	public $statement;

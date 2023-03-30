@@ -18,7 +18,7 @@ include('header.php');
 	?>
 	<br />
 	<div class="card">
-		<div class="card-header"><h4>Dostępni promotorzy</h4></div>
+		<div class="card-header"><h4>Zarezerwuj swój własny tematu u wybranego promotora.</h4></div>
 			<div class="card-body">
 				<div class="table-responsive">
 		      		<table class="table table-striped table-bordered" id="pd_list_table">

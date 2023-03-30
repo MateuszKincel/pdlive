@@ -30,7 +30,18 @@ $messages = $object->statement->fetchAll(PDO::FETCH_ASSOC);
 // Return the messages in a table
 echo '<html>';
 echo '<head>';
-echo '<link rel="stylesheet" type="text/css" href="/css/sb-admin-2.css">';
+// Add the relevant chat styles as inline styles
+echo '<style>
+.student {
+  background-color: #f2f2f2;
+  color: blue;
+}
+
+.promotor {
+  color: red;
+}
+
+</style>';
 echo '</head>';
 echo '<body>';
 echo '<table id="messages-table" style="width: 100%;">';

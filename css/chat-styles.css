@@ -1,0 +1,45 @@
+/* Wrapper for the chat messages */
+.chat-container {
+  width: 100%;
+}
+
+/* Table styles */
+#messages-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table header styles */
+#messages-table th {
+  text-align: left;
+  padding: 8px;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+}
+
+/* Table row styles */
+#messages-table tr {
+  border: 1px solid #ddd;
+}
+
+/* Table data/cell styles */
+#messages-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+/* Sender and recipient name styles */
+.sender-name {
+  font-weight: bold;
+  color: blue;
+}
+
+.recipient-name {
+  font-weight: bold;
+  color: red;
+}
+
+/* Message text styles */
+.message-text {
+  font-weight: normal;
+}

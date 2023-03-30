@@ -11,7 +11,7 @@
 
                 if($_SESSION['type'] != 'Admin')
                 {
-                    header("location:".$object->base_url."praca.php");
+                    header("location:".$object->admin_url);
                 }
 
                 include('header.php');

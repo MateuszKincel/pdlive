@@ -21,20 +21,32 @@ function getStudentName($object, $student_id) {
     }
 }
 
+function isStudentAccepted($object, $student_id) {
+    $object->query = "SELECT student_akceptacja FROM pd WHERE student_id = :student_id";
+    $object->execute(array(':student_id' => $student_id));
+    $result = $object->statement->fetch(PDO::FETCH_ASSOC);
+
+    if ($result && $result['student_akceptacja'] == 'Tak') {
+        return true;
+    }
+    return false;
+}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
+   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item mr-2">
-        <a class="nav-link btn btn-outline-primary text-white" href="tematy.php">Tematy</a>
-      </li>
-      <li class="nav-item mr-2">
-        <a class="nav-link btn btn-outline-primary text-white" href="panel.php">Rezerwuj</a>
-      </li>
+      <?php if (!isStudentAccepted($object, $_SESSION['student_id'])): ?>
+        <li class="nav-item mr-2">
+          <a class="nav-link btn btn-outline-primary text-white" href="tematy.php">Tematy</a>
+        </li>
+        <li class="nav-item mr-2">
+          <a class="nav-link btn btn-outline-primary text-white" href="panel.php">Rezerwuj</a>
+        </li>
+        <?php endif; ?>
       <li class="nav-item mr-2">
         <a class="nav-link btn btn-outline-primary text-white" href="praca.php">Moja Praca</a>
       </li>

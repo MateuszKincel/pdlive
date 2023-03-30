@@ -5,10 +5,14 @@ include('../class/handler_admin.php');
 
 $object = new Handler;
 
-if($object->is_login())
-{
-    header("location:".$object->base_url."");
+if ($object->is_login()) {
+    if ($_SESSION['type'] == 'Admin') {
+        header("location:".$object->admin_url."");
+    } else if ($_SESSION['type'] == 'Promotor') {
+        header("location:".$object->base_url."/admin/praca.php");
+    }
 }
+
 
 ?>
 

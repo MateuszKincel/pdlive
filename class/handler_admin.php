@@ -13,7 +13,7 @@ require '../includes/Exception.php';
 class Handler
 {
 	public $base_url = 'https://epraca.site';
-	public $admin_url = 'https://epraca.site/admin/panel_admin.php';
+	public $admin_url = 'https://epraca.site/admin/admin_panel.php';
 	public $connect;
 	public $query;
 	public $statement;
@@ -51,10 +51,10 @@ class Handler
     $mail->Host = 'smtp.titan.email';
     $mail->Port = '587';
     $mail->SMTPAuth = true;
-    $mail->Username = 'info@epraca.site';
+    $mail->Username = 'admin@epraca.site';
     $mail->Password = 'J2zgffghh!';
     $mail->SMTPSecure = 'tls';
-    $mail->From = 'info@epraca.site';
+    $mail->From = 'admin@epraca.site';
     $mail->FromName = 'E-Praca';
     $mail->addAddress($recipient);
     $mail->WordWrap = 50;

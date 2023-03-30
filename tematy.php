@@ -15,7 +15,7 @@ include('header.php');
 	<br />
 	<div class="card">
 		<span id="message"></span>
-		<div class="card-header"><h4>Proponowane tematy prac dyplomowych.</h4></div>
+		<div class="card-header"><h4>Zerezerwuj temat udostępniony przez promotorów.</h4></div>
 			<div class="card-body">
 				<div class="table-responsive">
 		      		<table class="table table-striped table-bordered" id="temat_list_table">
