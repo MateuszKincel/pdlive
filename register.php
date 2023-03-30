@@ -133,7 +133,7 @@ $(document).ready(function(){
 	event.preventDefault()
 	checkStudentGrDziek(event, this);
 });
-
+  });
 function checkStudentGrDziek(event, form) {
   const student_gr_dziek_value = $("#student_gr_dziek").val();
   if(!pattern.test(student_gr_dziek_value) && !pattern2.test(student_gr_dziek_value)){
@@ -172,5 +172,5 @@ function checkStudentGrDziek(event, form) {
 	}
   }
 }
-  });
+
 </script>

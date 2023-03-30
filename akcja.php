@@ -90,10 +90,10 @@ if(isset($_POST["action"]))
 			$mail->Host = 'smtp.titan.email';
 			$mail->Port = '587';
 			$mail->SMTPAuth = true;
-			$mail->Username = 'admin@epraca.site';
+			$mail->Username = 'info@epraca.site';
 			$mail->Password = 'J2zgffghh!';
 			$mail->SMTPSecure = 'tls';
-			$mail->From = 'admin@epraca.site';
+			$mail->From = 'info@epraca.site';
 			$mail->FromName = 'E-Praca';
 			$mail->AddAddress($_POST["student_adres_email"]);
 			$mail->WordWrap = 50;
