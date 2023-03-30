@@ -174,7 +174,7 @@ if($_POST["action"] == 'update_single')
     }
     else
     {
-        $output['error'] = "Nie udało się zaktualizować liczby tematów. Error message: ";
+        $output['error'] = "Nie udało się zaktualizować liczby tematów.";
     }
 
     echo json_encode($output);
