@@ -159,26 +159,30 @@ if($_POST["action"] == 'edit_single')
 
 if($_POST["action"] == 'update_single')
 {
-    $output = array();
+    $success = '';
+    $error = '';
     $query = "
-    UPDATE promotor SET
-    promotor_liczba_tematow = '".$_POST["promotor_liczba_tematow"]."'
-    WHERE promotor_id = '".$_POST["promotor_id"]."'
+        UPDATE promotor SET
+        promotor_liczba_tematow = '".$_POST["promotor_liczba_tematow"]."'
+        WHERE promotor_id = '".$_POST["promotor_id"]."'
     ";
-
     $object->query = $query;
+    try {
+        $object->execute();
+        $success = '<div class="alert alert-success">Liczba tematów została zaktualizowana.</div>';
+    } catch(PDOException $e) {
+        $error = '<div class="alert alert-danger">Nie udało się zaktualizować liczby tematów.</div>';
+    }
 
-    if($object->execute())
-    {
-        $output['success'] = true;
-    }
-    else
-    {
-        $output['error'] = "Nie udało się zaktualizować liczby tematów.";
-    }
+    $output = array(
+        'success' => $success,
+        'error' => $error
+    );
 
     echo json_encode($output);
 }
+
+
 
 
 

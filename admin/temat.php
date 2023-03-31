@@ -219,7 +219,6 @@ include('header.php');
           </div>
         </div>
         <div class="modal-footer">
-          <input type="hidden" name="promotor_id" id="promotor_id" value="" />
           <input type="hidden" name="action" id="action" value="update_single" />
           <input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Zapisz" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
@@ -262,7 +261,6 @@ function updateTopicsTotal() {
     url: "topics_total.php",
     success: function(data) {
       $("#header").text(data);
-	  console.log(data);
     }
   });
 }
@@ -460,43 +458,51 @@ $(document).on('click', '.edit_button', function(){
         {
             $('#editModal').modal('show');
             $('#promotor_liczba_tematow').val(data.promotor_liczba_tematow);
-            $('#promotor_id').val(promotor_id); // Set the value of the hidden input field
+            $('#promotor_id').val(promotor_id);
             $('#modal_title').text('Edytuj Liczbę Tematów');
             $('#action').val('update_single');
             $('#submit_button').val('Zapisz');
+			$('#form_message').html('');
         }
     })
 });
 
-
 $(document).on('submit', '#edit_form', function(event){
     event.preventDefault();
+
+    var formData = $(this).serializeArray();
+    formData.push({name: "promotor_id", value: $('#promotor_id').val()});
 
     $.ajax({
         url:"temat_akcja.php",
         method:"POST",
-        data:$(this).serialize(),
+        data: formData,
         dataType:"json",
         success:function(data)
         {
             if(data.success)
             {
                 $('#editModal').modal('hide');
-                $('#form_message').html('<div class="alert alert-success">Liczba tematów została zaktualizowana.</div>');
+                $('#form_message').html(data.success);
                 setTimeout(function(){
                     $('#form_message').html('');
                 }, 5000);
-                
-                // Reload the datatable
-                $('#dataTable').DataTable().ajax.reload();
+                // Reload the DataTable
+                dataTable.ajax.reload();
+				updateTopicsTotal();
             }
             else
             {
-                $('#form_message').html('<div class="alert alert-danger">'+data.error+'</div>');
+                
+				$('#form_message').html(data.error);
             }
         }
     })
 });
+
+
+
+
 
 
 
