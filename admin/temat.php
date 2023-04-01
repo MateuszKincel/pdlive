@@ -146,7 +146,50 @@ include('header.php');
 <?php } ?>
 
 
-
+<?php if($_SESSION["type"] == "Promotor" ) {  ?>
+<div id="tematModal" class="modal fade">
+  	<div class="modal-dialog">
+    	<form method="post" id="temat_form">
+      		<div class="modal-content">
+        		<div class="modal-header">
+          			<div class="header-group">
+						<h4 class="modal-title" id="modal_title">Dodaj tematy</h4>
+						<h6 class='modal-summary' id='modal_summary'></h6>
+					</div>
+          			<button type="button" class="close" data-dismiss="modal">&times;</button>
+        		</div>
+        		<div class="modal-body">
+        			<span id="form_message"></span>
+		          	<div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Semestr<span class="text-danger" >*</span></label>
+                                <input type="text" name="temat_semestr" id="temat_semestr" class="form-control" placeholder="np: semestr zimowy 2022/2023 " />
+                            </div>
+							<div class="col-md-12">
+                                <label>Grupa<span class="text-danger" >*</span></label>
+                                <input type="text" name="temat_grupa" id="temat_grupa" class="form-control" placeholder="np: 41 INF-ISM-NP / 11 INF-SP..." />
+                            </div>
+							<div class="col-md-12">
+                                <label>Temat Pracy <span class="text-danger">*</span></label>
+                                <input type="text" name="temat" id="temat" class="form-control" />
+                            </div>
+							<div class="col-md-12">
+                                <label>Cel i Zakres Pracy <span class="text-danger">*</span></label>
+                                <input type="text" name="cel_zakres" id="cel_zakres" class="form-control" />
+                            </div>
+                        </div>
+        		<div class="modal-footer">
+          			<input type="hidden" name="hidden_id" id="hidden_id" value="<?= $_SESSION['admin_id'] ?>"/>
+          			<input type="hidden" name="action" id="action" value="Add" />
+          			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Dodaj" />
+          			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+        		</div>
+      		</div>
+    	</form>
+  	</div>
+</div>
+<?php } ?>
 
 
 
@@ -154,7 +197,7 @@ include('header.php');
 <?php if($_SESSION["type"] == "Admin" ) { ?>
 <div id="adminTematModal" class="modal fade">
   	<div class="modal-dialog">
-    	<form method="post" id="temat_form">
+    	<form method="post" id="temat_form_admin">
       		<div class="modal-content">
         		<div class="modal-header">
           			<div class="header-group">
@@ -433,8 +476,8 @@ $(document).on('click', '.add_topic_button', function(){
 	$('#promotor_id').val(promotor_id);
 	
 	// Reset the form and display the modal
-	$('#temat_form')[0].reset();
-	$('#temat_form').parsley().reset();
+	$('#temat_form_admin')[0].reset();
+	$('#temat_form_admin').parsley().reset();
 	$('#modal_title').text('Dodaj tematy');
 	$('#submit_button').val('Zapisz');
 	$('#adminTematModal').modal('show');
@@ -572,5 +615,3 @@ $('#przydzial_button').click(function(){
 });
 
 </script>
-
-
