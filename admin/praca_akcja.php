@@ -548,7 +548,7 @@ if(isset($_POST["action"]))
 			";
 			$object->execute($data);
 			
-			echo '<div class="alert alert-success">Status wizyty zmieniony na '.$_POST["postep"].'</div>';
+			echo '<div class="alert alert-success">Status pracy zmieniony na '.$_POST["postep"].'</div>';
 
 			if(empty($_POST['komentarz_promotora'])) {
 				 $message = 'Twoj promotor nie zostawił żadnego komentarza';
@@ -627,7 +627,7 @@ if(isset($_POST["action"]))
 			";
 			$object->execute($data);
 			
-			echo '<div class="alert alert-success">Status wizyty zmieniony na 40 %</div>';
+			echo '<div class="alert alert-success">Status pracy zmieniony na 40 %</div>';
 			}
 		}
 	}
@@ -656,7 +656,7 @@ if($_SESSION['type'] == 'Promotor' && isset($_POST['student_akceptacja']) && $_P
 
 		// Refresh the pd datatable
 		echo '<script>dataTable.ajax.reload();</script>';
-		echo '<div class="alert alert-success">Status wizyty zmieniony na "Odrzucono"</div>';
+		echo '<div class="alert alert-success">Status pracy zmieniony na "Odrzucono"</div>';
 	}
 }
 

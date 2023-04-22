@@ -1067,7 +1067,7 @@ if($_POST['action'] == 'fetch_temat')
 			':pd_id'	=>	$_POST['pd_id']
 		);
 
-	$file = file_get_contents('C:\xampp\htdocs\pracadyplomowa\pliki do pobrania\kartapracy.html');
+	$file = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/downloads/kartapracy.html');
 
 	$object->query = "
 		SELECT * FROM pd 
@@ -1106,7 +1106,7 @@ if($_POST['action'] == 'fetch_temat')
 			$file = str_replace("[kierunek studiów]", $student_row["student_kierunek"], $file);
 			$file = str_replace("[specjalność]", $student_row["student_specjal"], $file);
 			$file = str_replace("[pierwszy/drugi]", $student_row["student_stopien"], $file);
-			$file = str_replace("[IMIĘ I NAZWISKO (W NAWIASIE NR ALBUMU]", $student_row["student_imie"].' '.$student_row["student_nazwisko"].' '.$student_row["student_nr_indeksu"], $file);
+			$file = str_replace("[IMIĘ I NAZWISKO (W NAWIASIE NR ALBUMU]", $student_row["student_imie"].' '.$student_row["student_nazwisko"].' ('.$student_row["student_nr_indeksu"].')', $file);
 
 		}
 		foreach($promotor_data as $promotor_row) {
@@ -1119,12 +1119,29 @@ if($_POST['action'] == 'fetch_temat')
 		$praca_row["cel_zakres_pracy"];
 
 		$file = str_replace("[TEMAT PRACY W JĘZYKU POLSKIM]", $praca_row["temat_pracy"], $file);
-		$file = str_replace("[TEMAT PRACY W JEZYKU ANGIELSKIM]", $praca_row["temat_pracy_ang"], $file);
-		$file = str_replace("[Wpisz cel i zakres pracy]", $praca_row["cel_zakres_pracy"], $file);
+		$file = str_replace("[TEMAT PRACY W JĘZYKU ANGIELSKIM]", $praca_row["temat_pracy_ang"], $file);
+		$cel_zakres_pracy = $praca_row["cel_zakres_pracy"];
+
+        $cel_zakres_pracy = $praca_row["cel_zakres_pracy"];
+
+// Match "Zakres pracy" with optional colon and case-insensitive
+if(preg_match('/zakres\s*pracy\s*:?/i', $cel_zakres_pracy)) {
+    // Move "Zakres pracy" to a new line
+    $cel_zakres_pracy = preg_replace('/zakres\s*pracy\s*:/i', '<br>Zakres pracy:', $cel_zakres_pracy);
+} else {
+    // Find the last period in the string
+    $last_period_pos = strrpos($cel_zakres_pracy, ".");
+    if($last_period_pos !== false) {
+        // Start a new line after the last period
+        $cel_zakres_pracy = substr_replace($cel_zakres_pracy, "<br>", $last_period_pos + 1, 0);
+    }
+}
+
+$file = str_replace("[Wpisz cel i zakres pracy]", $cel_zakres_pracy, $file);
 	}
 
 	$file_new_name = $student_row["student_nr_indeksu"].'_kartapracy';
-	$upload_path = 'downloads\\'.basename($file_new_name);
+	$upload_path = 'downloads/' . basename($file_new_name);
 	// $file_utf8 = mb_convert_encoding($file,'HTML-ENTITIES','UTF-8');
 	// file_put_contents($upload_path, $file);
 
@@ -1145,9 +1162,6 @@ if($_POST['action'] == 'fetch_temat')
 	header('Content-Type: application/pdf');
 	header('Content-Length: ' . filesize($file_path));
 	readfile($file_path);
-	
-	
-	
 }
 
 
