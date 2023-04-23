@@ -467,7 +467,7 @@ $(document).on('click', '.view_button', function(){
 	});
 
 
-	// When the add_topic_button is clicked
+// When the add_topic_button is clicked
 $(document).on('click', '.add_topic_button', function(){
 	// Get the promotor_id value from the button
 	var promotor_id = $(this).data('id');
@@ -482,6 +482,51 @@ $(document).on('click', '.add_topic_button', function(){
 	$('#submit_button').val('Zapisz');
 	$('#adminTematModal').modal('show');
 	$('#form_message').html('');
+});
+
+$('#temat_form_admin').on('submit', function(event){
+	event.preventDefault();
+	
+	// Get the form data
+	var formData = $(this).serialize();
+	
+	// Send an AJAX request to the server
+	$.ajax({
+		url: 'temat_akcja.php',
+		type: 'POST',
+		dataType: 'json',
+		data: formData,
+		beforeSend: function() {
+			$('#submit_button').attr('disabled', 'disabled');
+			$('#submit_button').val('Czekaj...');
+		},
+		success: function(response) {
+			if (response.error) {
+				$('#form_message').html(response.error);
+				$('#submit_button').removeAttr('disabled');
+				$('#submit_button').val('Zapisz');
+			} else {
+				$('#temat_form_admin')[0].reset();
+				$('#temat_form_admin').parsley().reset();
+				$('#adminTematModal').modal('hide');
+				$('#message').html(response.success);
+				dataTable.ajax.reload();
+
+				setTimeout(function(){
+		            $('#message').html('');
+		        }, 5000);
+			}
+		},
+		error: function(xhr, status, error) {
+			console.log(xhr.responseText);
+			console.log(status);
+			console.log(error);
+		},
+		complete: function() {
+			$('#submit_button').removeAttr('disabled');
+			$('#submit_button').val('Zapisz');
+		}
+	});
 });
 
 
