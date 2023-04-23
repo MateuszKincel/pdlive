@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 //temat_akcja.php
@@ -16,10 +19,10 @@ if(isset($_POST["action"]))
         
         $output = array();
 		if($_SESSION["type"] == "Promotor" ) {
-		$order_column = array('promotor_id','temat','temat_grupa','temat_semestr', 'temat_dostepny');
+		$order_column = array('promotor_id','temat_grupa','temat','temat_ang','temat_semestr', 'temat_dostepny');
 		$main_query = "SELECT *  FROM temat WHERE promotor_id = '".$_SESSION["admin_id"]."' ";
 		} else {
-		$order_column = array('promotor_id','promotor_nazwa','temat','temat_grupa','temat_semestr', 'temat_dostepny');
+		$order_column = array('promotor_id','promotor_nazwa','temat','temat_ang','temat_grupa','temat_semestr', 'temat_dostepny');
         $main_query = "SELECT DISTINCT * FROM promotor ";
 		}
         $search_query = '';
@@ -282,6 +285,7 @@ if ($_SESSION["type"] == "Admin" && $_POST["action"] == 'Add_admin') {
 
     $data = array(
         ':temat' => $object->clean_input($_POST["temat"]),
+        ':temat_ang' => $object->clean_input($_POST["temat_ang"]),
         ':temat_dostepny' => 'Tak',
         ':cel_zakres' => $object->clean_input($_POST["cel_zakres"]),
         ':temat_semestr' => $object->clean_input($_POST["temat_semestr"]),
@@ -290,19 +294,19 @@ if ($_SESSION["type"] == "Admin" && $_POST["action"] == 'Add_admin') {
     );
 
     $object->query = "SELECT COUNT(*) as temat_count FROM temat WHERE promotor_id = :promotor_id";
-	$object->execute(array(':promotor_id' => $_POST['promotor_id']));
-	$row = $object->fetch();
-	$temat_count = $row['temat_count'];
+    $object->execute(array(':promotor_id' => $_POST['promotor_id']));
+    $row = $object->fetch();
+    $temat_count = $row['temat_count'];
 
-	$object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = :promotor_id";
-	$object->execute(array(':promotor_id' => $_POST['promotor_id']));
-	$row = $object->fetch();
-	$promotor_temat_limit = $row['promotor_liczba_tematow'];
+    $object->query = "SELECT promotor_liczba_tematow FROM promotor WHERE promotor_id = :promotor_id";
+    $object->execute(array(':promotor_id' => $_POST['promotor_id']));
+    $row = $object->fetch();
+    $promotor_temat_limit = $row['promotor_liczba_tematow'];
 
     if ($temat_count >= $promotor_temat_limit) {
         $error = '<div class="alert alert-danger">Dodałeś już wszystkie tematy!</div>';
     } else {
-        $object->query = "INSERT INTO temat (temat_grupa,promotor_id, temat, temat_semestr,cel_zakres, temat_dostepny) VALUES (:temat_grupa, :promotor_id, :temat, :temat_semestr,:cel_zakres, :temat_dostepny)";
+        $object->query = "INSERT INTO temat (temat_grupa, promotor_id, temat,temat_ang, temat_semestr, cel_zakres, temat_dostepny) VALUES (:temat_grupa, :promotor_id, :temat, :temat_ang, :temat_semestr,:cel_zakres, :temat_dostepny)";
         $object->execute($data);
 
         $success = '<div class="alert alert-success">Temat Dodany</div>';

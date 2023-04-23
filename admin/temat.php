@@ -108,6 +108,7 @@ include('header.php');
         </div>
     </div>
 </div>
+</div>
 <?php } ?>
 
 <?php if($_SESSION["type"] == "Admin" ) { ?>
@@ -146,54 +147,6 @@ include('header.php');
 <?php } ?>
 
 
-<?php if($_SESSION["type"] == "Promotor" ) {  ?>
-<div id="tematModal" class="modal fade">
-  	<div class="modal-dialog">
-    	<form method="post" id="temat_form">
-      		<div class="modal-content">
-        		<div class="modal-header">
-          			<div class="header-group">
-						<h4 class="modal-title" id="modal_title">Dodaj tematy</h4>
-						<h6 class='modal-summary' id='modal_summary'></h6>
-					</div>
-          			<button type="button" class="close" data-dismiss="modal">&times;</button>
-        		</div>
-        		<div class="modal-body">
-        			<span id="form_message"></span>
-		          	<div class="form-group">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Semestr<span class="text-danger" >*</span></label>
-                                <input type="text" name="temat_semestr" id="temat_semestr" class="form-control" placeholder="np: semestr zimowy 2022/2023 " />
-                            </div>
-							<div class="col-md-12">
-                                <label>Grupa<span class="text-danger" >*</span></label>
-                                <input type="text" name="temat_grupa" id="temat_grupa" class="form-control" placeholder="np: 41 INF-ISM-NP / 11 INF-SP..." />
-                            </div>
-							<div class="col-md-12">
-                                <label>Temat Pracy <span class="text-danger">*</span></label>
-                                <input type="text" name="temat" id="temat" class="form-control" />
-                            </div>
-							<div class="col-md-12">
-                                <label>Cel i Zakres Pracy <span class="text-danger">*</span></label>
-                                <input type="text" name="cel_zakres" id="cel_zakres" class="form-control" />
-                            </div>
-                        </div>
-        		<div class="modal-footer">
-          			<input type="hidden" name="hidden_id" id="hidden_id" value="<?= $_SESSION['admin_id'] ?>"/>
-          			<input type="hidden" name="action" id="action" value="Add" />
-          			<input type="submit" name="submit" id="submit_button" class="btn btn-success" value="Dodaj" />
-          			<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-        		</div>
-      		</div>
-    	</form>
-  	</div>
-</div>
-<?php } ?>
-
-
-
-
 <?php if($_SESSION["type"] == "Admin" ) { ?>
 <div id="adminTematModal" class="modal fade">
   	<div class="modal-dialog">
@@ -221,6 +174,10 @@ include('header.php');
 							<div class="col-md-12">
                                 <label>Temat Pracy <span class="text-danger">*</span></label>
                                 <input type="text" name="temat" id="temat" class="form-control" />
+                            </div>
+							<div class="col-md-12">
+                                <label>Temat Pracy j. ang. <span class="text-danger">*</span></label>
+                                <input type="text" name="temat_ang" id="temat_ang" class="form-control" />
                             </div>
 							<div class="col-md-12">
                                 <label>Cel i Zakres Pracy <span class="text-danger">*</span></label>
@@ -344,12 +301,11 @@ $(document).on('click', '.view_button', function(){
             var html = '<div class="table-responsive">';
             html += '<table class="table">';
 
-			for(var i = 0; i < data.length; i++) {
-				// html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td></tr>';
-				// html += '<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
-				html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td></tr>' +
-				'<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
-			}
+            for(var i = 0; i < data.length; i++) {
+                html += '<tr><th width="40%" class="text-right">Temat '+(i+1)+':</th><td width="60%">'+data[i].temat+'</td>' +
+                '<td><button type="button" action="delete_temat" name="delete_button" class="btn btn-danger btn-circle delete_button" data-id="'+data[i].temat_id+'" title="Usuń"><i class="fa fa-times"></i></button></td></tr>' +
+                '<tr><th width="40%" class="text-right">Semestr tematu '+(i+1)+':</th><td width="60%">'+data[i].temat_semestr+'</td></tr>';
+            }
 
             html += '</table></div>';
 
@@ -357,50 +313,30 @@ $(document).on('click', '.view_button', function(){
 
             $('#temat_details').html(html);
         }
-    })
+    });
 });
 
-
-
-	$(document).on('click', '.delete_button', function(){
-
-    	var id = $(this).data('id');
-
-    	if(confirm("Usunąć temat?"))
-    	{
-
-      		$.ajax({
-
-        		url:"temat_akcja.php",
-
-        		method:"POST",
-
-        		data: {id: id, action: 'delete_temat'},
-
-        		success:function(data)
-        		{
-
-          			$('#message').html(data);
-
-          			dataTable.ajax.reload();
-
-          			setTimeout(function(){
-
-            			$('#message').html('');
-
-          			}, 5000);
-
-        		}
-
-      		})
-
-    	}
-
-  	});
+$(document).on('click', '.delete_button', function(){
+    var id = $(this).data('id');
+    if(confirm("Usunąć temat?"))
+    {
+        $.ajax({
+            url:"temat_akcja.php",
+            method:"POST",
+            data: {id: id, action: 'delete_temat'},
+            success:function(data)
+            {
+                $('#message').html(data);
+                $('#viewModal').modal('hide'); // Hide the modal
+                dataTable.ajax.reload();
+                setTimeout(function(){
+                    $('#message').html('');
+                }, 5000);
+            }
+        })
+    }
+});
 	
-
-
-
    $('#add_temat').click(function(){
 		updateModalSummary();
 
@@ -437,7 +373,7 @@ $(document).on('click', '.view_button', function(){
 				beforeSend:function()
 				{
 					$('#submit_button').attr('disabled', 'disabled');
-					$('#submit_button').val('wait...');
+					$('#submit_button').val('Czek..');
 				},
 				success:function(data)
 				{
@@ -531,9 +467,6 @@ $('#temat_form_admin').on('submit', function(event){
 
 
 
-	
-
-
 $(document).on('click', '.edit_button', function(){
     var promotor_id = $(this).data("id");
     $('#form_message').html('');
@@ -587,11 +520,6 @@ $(document).on('submit', '#edit_form', function(event){
         }
     })
 });
-
-
-
-
-
 
 
 $('#przydzial_button').click(function(){
