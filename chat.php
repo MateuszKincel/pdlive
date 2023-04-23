@@ -142,6 +142,15 @@ $recipients = $object->statement->fetchAll(PDO::FETCH_ASSOC);
 </script>
 
 <script>
+  const messageInput = document.querySelector('#message');
+  const sendButton = document.querySelector('#send-btn');
+  
+  sendButton.addEventListener('click', () => {
+    messageInput.value = ''; // Clear the message input field
+  });
+</script>
+
+<script>
   $(document).ready(function() {
 
     $('#file-input').change(function() {
